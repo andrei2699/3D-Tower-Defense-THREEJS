@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Tower Defense</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wave-starting-text"></div>
+    <div id="game-shop-title-container" class="game-menu">
+        <div id="game-shop-title">Game Shop</div>
+        <button class="btn btn-style btn-red" id="leaveShopButton">
+            LEAVE
+        </button>
+    </div>
+
+    <div id="main-menu-container" class="game-menu">
+        <div class="blurred-bg"></div>
+        <button class="btn btn-style btn-green" id="playButton">
+            PLAY
+        </button>
+        <button class="btn btn-style btn-yellow" id="tutorialButton">
+            TUTORIAL
+        </button>
+    </div>
+
+    <div id="game-wave-finished-container" class="game-menu">
+        <button class="btn btn-style btn-orange" id="goToShopButton">
+            SHOP
+        </button>
+
+        <button class="btn btn-style btn-blue" id="nextWaveButton">
+            START WAVE
+        </button>
+    </div>
+    <div id="in-game-container" class="game-menu">
+        <div class="margin-left">
+            <span>Lives: </span>
+            <span id="lives-value">3</span>
+            <div id="remove-lives-value"></div>
+        </div>
+
+        <div>
+            <span>Money: </span>
+            <span id="money-value">100</span>
+            <div id="add-money-value"></div>
+        </div>
+
+        <div>
+            <span>Wave: </span>
+            <span id="wave-value"></span>
+        </div>
+
+        <div class="margin-right">
+            <span>Enemies Left: </span>
+            <span id="ememies-left-value"></span>
+        </div>
+    </div>
+
+    <div id="app"></div>
+
+    <script src="js/lib/three.js"></script>
+    <script src="js/lib/threeInteractive.js"></script>
+    <script src="js/lib/tween.js"></script>
+    <script src="js/lib/orbitalControls.js"></script>
+    <script src="js/lib/gltfLoader.js"></script>
+    <script src="js/lib/skeletonUtils.js"></script>
+
+    <script src="js/src/scenes/scene.js"></script>
+    <script src="js/src/scenes/mainMenuScene.js"></script>
+    <script src="js/src/scenes/gameScene.js"></script>
+    <script src="js/src/scenes/shopScene.js "></script>
+
+    <script src="js/src/mapLoader.js"></script>
+    <script src="js/src/entities/data/entitiesData.js"></script>
+    <script src="js/src/entities/data/entityData.js"></script>
+
+    <script src="js/src/entities/entity.js"></script>
+    <script src="js/src/entities/animatedEntity.js"></script>
+    <script src="js/src/entities/waveManager.js"></script>
+    <script src="js/src/entities/basicBullet.js"></script>
+    <script src="js/src/entities/bullet.js"></script>
+    <script src="js/src/entities/healthbar.js"></script>
+    <script src="js/src/entities/enemy.js"></script>
+    <script src="js/src/entities/basicTurret.js"></script>
+    <script src="js/src/entities/turret.js"></script>
+    <script src="js/src/shopMenuScene.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,193 @@
+.game-menu {
+    position: absolute;
+    width: 100%;
+    justify-content: center;
+}
+
+:root {
+    --yellow-color: #f1c40f;
+    --green-color: hsl(110, 64%, 43%);
+    --blue-color: hsl(209, 89%, 50%);
+    --orange-color: hsl(37, 82%, 51%);
+    --red-color: hsl(0, 82%, 51%);
+}
+
+#game-shop-title-container {
+    top: 10px;
+    display: none;
+    /* flex */
+}
+
+#game-shop-title {
+    width: 30%;
+    text-align: center;
+    z-index: 100;
+    display: block;
+    font-size: 4em;
+    font-family: fantasy;
+    background: #d4bda2;
+    padding: 16px;
+    text-shadow: 2px 2px #6b5e5e;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 25px;
+}
+
+#main-menu-container {
+    height: 100%;
+    display: none;
+    /* flex */
+    align-items: center;
+    flex-direction: column;
+}
+
+.btn {
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #e74c3c;
+    border-radius: 0.6em;
+    color: #e74c3c;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+    margin: 20px;
+    padding: 1.2em 2.8em;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    z-index: 1;
+}
+
+.btn:hover, .btn:focus {
+    color: #fff;
+    outline: 0;
+}
+
+.btn-style {
+    color: #fff;
+    background-position: 100%;
+    background-size: 400%;
+    -webkit-transition: background 300ms ease-in-out;
+    transition: background 300ms ease-in-out;
+}
+
+.btn-style:hover {
+    background-position: 0;
+}
+
+.btn-yellow {
+    border-color: var(--yellow-color);
+    background-image: -webkit-linear-gradient(45deg, var(--yellow-color) 50%, transparent 50%);
+    background-image: linear-gradient(45deg, var(--yellow-color) 50%, transparent 50%);
+}
+
+.btn-green {
+    border-color: var(--green-color);
+    background-image: -webkit-linear-gradient(45deg, var(--green-color) 50%, transparent 50%);
+    background-image: linear-gradient(45deg, var(--green-color) 50%, transparent 50%);
+}
+
+.btn-blue {
+    border-color: var(--blue-color);
+    background-image: -webkit-linear-gradient(45deg, var(--blue-color) 50%, transparent 50%);
+    background-image: linear-gradient(45deg, var(--blue-color) 50%, transparent 50%);
+}
+
+.btn-orange {
+    border-color: var(--orange-color);
+    background-image: -webkit-linear-gradient(45deg, var(--orange-color) 50%, transparent 50%);
+    background-image: linear-gradient(45deg, var(--orange-color) 50%, transparent 50%);
+}
+
+.btn-red {
+    border-color: var(--red-color);
+    background-image: -webkit-linear-gradient(45deg, var(--red-color) 50%, transparent 50%);
+    background-image: linear-gradient(45deg, var(--red-color) 50%, transparent 50%);
+}
+
+.blurred-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(118 135 150 / 65%);
+}
+
+#leaveShopButton {
+    position: absolute;
+    left: 0;
+    top: -10px;
+}
+
+#wave-starting-text {
+    position: absolute;
+    color: white;
+    font-size: 3em;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+}
+
+#game-wave-finished-container {
+    display: none;
+    /* flex */
+    justify-content: space-between;
+}
+
+#in-game-container {
+    top: 30px;
+    display: none;
+    /* flex */
+    font-size: 2em;
+    justify-content: space-between;
+}
+
+#add-money-value {
+    color: #03ff03;
+    font-size: 1.5em;
+    opacity: 0;
+}
+
+#remove-lives-value {
+    color: #ff0303;
+    font-size: 1.5em;
+    opacity: 0;
+}
+
+.margin-left {
+    margin-left: 20vh;
+}
+
+.margin-right {
+    margin-right: 30vh;
+}
+
+.add-value {
+    animation-name: addScoreAnimation;
+    animation-duration: 4s;
+    animation-iteration-count: 1;
+}
+
+@keyframes addScoreAnimation {
+    0% {
+        opacity: 1;
+        transform: translate(110%, -5vh);
+    }
+    100% {
+        transform: translate(110%, -20vh);
+        opacity: 0;
+    }
+}

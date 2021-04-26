@@ -1,0 +1,27 @@
+TODO
+
+add foliage
+change floor
+place turrets -> update map with turret position and check if position is free
+add shaders for the turret that is going to be placed
+show turret properties
+show turret reach radius
+make shop -> maybe replace the shop scene with a side navigator
+add sounds
+multiple turrets
+levels menu
+multiple levels
+bullet revision
+Improve Game UI 
+Make Main Menu Scene Background map functional -> infinite waves, some turrets, auto start wave
+
+
+DONE
+proper lighting
+vary enemy colors and size
+add shadows
+enemy rotates towards waypoint
+check why models are dark
+get enemy models
+add animations to enemies
+spawn enemies at correct starting location -> place enemies at correct height

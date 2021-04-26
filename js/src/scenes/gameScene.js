@@ -3,7 +3,7 @@ class GameScene extends Scene {
         super(scene, camera);
         this.mouse = new THREE.Vector2();
         this.selectedToBePlacedObject;
-        this.isHittingSurface;
+        this.isHoveringValidSpot;
 
         this.timeoutCount = 0;
 
@@ -15,10 +15,13 @@ class GameScene extends Scene {
 
         document.getElementById("goToShopButton").addEventListener("click", (event) => {
             // changeScene(shopScene);
-            this.isPlacingTurret = true;
-        })
+            console.log(allTurretData[0])
 
-        this.isPlacingTurret = false;
+            this.remove(this.selectedToBePlacedObject);
+            this.selectedToBePlacedObject = new PlaceableTurret(allTurretData[0]);
+            this.add(this.selectedToBePlacedObject);
+            this.selectedToBePlacedObject.setMaterialColor(0x00ff00);
+        })
 
         this.waveFinishedPanel = document.getElementById("game-wave-finished-container");
         this.inGamePanel = document.getElementById("in-game-container");
@@ -56,29 +59,77 @@ class GameScene extends Scene {
         this.addEventListener("pointerdown", (event) => {
             if (event.button == 0) {
 
-                if (this.isHittingSurface) {
-                    if (this.selectedToBePlacedObject) {
-                        this.selectedToBePlacedObject.place();
-                    }
+                if (this.selectedToBePlacedObject && this.isHoveringValidSpot) {
+
+                    this.selectedToBePlacedObject.place();
+                    var gridPosition = this._calculateGridPosition(this.selectedToBePlacedObject.mesh.position)
+                    this.remove(this.selectedToBePlacedObject);
+
+                    var turret = new Turret(this.selectedToBePlacedObject.data, this)
+                    turret.mesh.position.set(gridPosition.x, gridPosition.y, gridPosition.z);
+                    turret.weaponAngle = this.selectedToBePlacedObject.weaponAngle;
+                    this.add(turret)
+
+                    this.map[gridPosition.x][gridPosition.z] = 5;
                     this.selectedToBePlacedObject = undefined;
                 }
 
-                const intersections = this.raycastFromCamera(true);
+                // const intersections = this.raycastFromCamera(true);
 
-                intersections.forEach(intersection => {
-                    if (intersection.object.parent && intersection.object.parent.isTurret && intersection.object.parent.component) {
-                        intersection.object.parent.component.setReachRadiusVisibility(true);
-                        sthis.electedToBePlacedObject = intersection.object.parent.component;
-                    }
-                });
+                // intersections.forEach(intersection => {
+                //     if (intersection.object.parent && intersection.object.parent.isTurret && intersection.object.parent.component) {
+                //         intersection.object.parent.component.setReachRadiusVisibility(true);
+                //         this.electedToBePlacedObject = intersection.object.parent.component;
+                //     }
+                // });
             }
         });
 
         this.sceneLeave();
     }
 
-    add(gameobject) {
-        super.add(gameobject)
+    update(deltaTime) {
+        super.update(deltaTime);
+
+        if (this.selectedToBePlacedObject) {
+
+            const intersects = this.raycastFromCamera();
+            this.isHoveringValidSpot = false;
+
+            for (let i = 0; i < intersects.length; i++) {
+                if (intersects[i].object.isMapCell) {
+                    var gridPosition = this._calculateGridPosition(intersects[i].point);
+
+                    if (!intersects[i].object.isPath && this._checkIfHoverPositionIsCorrect(gridPosition)) {
+                        this.selectedToBePlacedObject.setMaterialColor(0x00ff00);
+
+                        this.isHoveringValidSpot = true;
+                    } else {
+                        this.selectedToBePlacedObject.setMaterialColor(0xff0000);
+                    }
+
+                    this.selectedToBePlacedObject.mesh.position.set(gridPosition.x, gridPosition.y, gridPosition.z);
+
+                    break;
+                }
+            }
+        }
+    }
+
+    _checkIfHoverPositionIsCorrect(gridPosition) {
+        return this.map[gridPosition.x][gridPosition.z] == 0;
+    }
+
+    _calculateGridPosition(point) {
+        var gridPositonX = parseInt((point.x / GridSize + GridSize / 2) * GridSize);
+        var gridPositonY = point.y;
+        var gridPositonZ = parseInt((point.z / GridSize + GridSize / 2) * GridSize);
+
+        return { x: gridPositonX, y: gridPositonY, z: gridPositonZ };
+    }
+
+    addEnemy(gameobject) {
+        this.add(gameobject)
         this.allEnemies.push(gameobject);
     }
 
@@ -92,6 +143,7 @@ class GameScene extends Scene {
                 const map = JSON.parse(data);
                 var waypoints = loadMap(map, me.scene, GridSize);
 
+                me.map = map.map;
                 me.waveManager.setData(me, waypoints, waveData);
                 me.waveCount = waveData.length;
 
@@ -212,7 +264,6 @@ class GameScene extends Scene {
             }
         }
     }
-
 
     startTimeout() {
         if (this.timeoutCount > 0) {

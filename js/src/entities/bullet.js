@@ -1,7 +1,8 @@
 class Bullet extends BasicBullet {
-    constructor(speed, damage, startPosition, direction) {
+    constructor(speed, damage, startPosition, direction, scene) {
         super(speed, damage, startPosition, direction);
 
+        this.scene = scene;
         this.worldPosition = new THREE.Vector3();
         this.intersectionWorldPosition = new THREE.Vector3();
     }
@@ -10,7 +11,7 @@ class Bullet extends BasicBullet {
         super.update(deltaTime);
 
         var collision = this.findCollision();
-        if (collision) {
+        if (collision && collision.applyDamage) {
 
             collision.applyDamage(this.damage);
             removeGameobject(this);
@@ -20,12 +21,12 @@ class Bullet extends BasicBullet {
     findCollision() {
 
         this.mesh.getWorldPosition(this.worldPosition);
-        for (let i = 0; i < allEnemies.length; i++) {
-            allEnemies[i].mesh.getWorldPosition(this.intersectionWorldPosition);
+        for (let i = 0; i < this.scene.allEnemies.length; i++) {
+            this.scene.allEnemies[i].mesh.getWorldPosition(this.intersectionWorldPosition);
 
             if (this.worldPosition.distanceToSquared(this.intersectionWorldPosition) <= 0.1) {
 
-                return allEnemies[i];
+                return this.scene.allEnemies[i];
             }
         }
 

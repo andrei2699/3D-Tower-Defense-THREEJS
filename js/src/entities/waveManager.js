@@ -56,7 +56,7 @@ class WaveManager {
                 var enemyData = this.findEnemyData(currentEnemyType);
 
                 const enemy = new Enemy(enemyData, this.waypoints, this.spawnScene);
-                this.spawnScene.add(enemy)
+                this.spawnScene.addEnemy(enemy)
                 this.spawnScene.addToBeBeUpdated(enemy.healthbar);
             }
         }

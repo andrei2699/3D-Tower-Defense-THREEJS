@@ -193,25 +193,6 @@ function animate(callback) {
         deltaTime = (time - lastTime) * 0.001;
         lastTime = time;
 
-        // if (selectedToBePlacedObject) {
-
-        //     const intersects = raycastFromCamera();
-        //     isHittingSurface = false;
-
-        //     for (let i = 0; i < intersects.length; i++) {
-        //         if (intersects[i].object.isMapCell) {
-        //             if (!intersects[i].object.isPath) {
-        //                 isHittingSurface = true;
-        //                 var gridPositonX = parseInt((intersects[i].point.x / GridSize + GridSize / 2) * GridSize);
-        //                 var gridPositonZ = parseInt((intersects[i].point.z / GridSize + GridSize / 2) * GridSize);
-
-        //                 selectedToBePlacedObject.mesh.position.set(gridPositonX, intersects[i].point.y, gridPositonZ);
-        //             }
-        //             break;
-        //         }
-        //     }
-        // }
-
         currentScene.update(deltaTime);
 
         requestAnimationFrame(loop);

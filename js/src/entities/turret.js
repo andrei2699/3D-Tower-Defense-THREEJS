@@ -1,21 +1,30 @@
 class Turret extends Entity {
-    constructor(entityData) {
-        super(entityData.mesh.scene);
+    constructor(entityData, scene) {
+        super(entityData.mesh.scene.clone());
 
+        this.scene = scene;
         this.mesh.isTurret = true;
         this.mesh.component = this;
 
-        this.firingSpeed = ntityData.data.firingSpeed;
+        this.firingSpeed = entityData.data.firingSpeed;
         this.currentFiringTime = 0;
-        this.bulletDamage = ntityData.data.bulletDamage;
+        this.bulletDamage = entityData.data.bulletDamage;
 
         this.weapon = undefined;
         for (let i = 0; i < this.mesh.children.length; i++) {
-            if (mesh.children[i].userData && mesh.children[i].userData.name.toLowerCase() == "weapon") {
-                this.weapon = mesh.children[i];
+            if (this.mesh.children[i].userData && this.mesh.children[i].userData.name.toLowerCase() == "weapon") {
+                this.weapon = this.mesh.children[i];
                 break;
             }
         }
+
+        this.mesh.castShadow = true;
+        this.mesh.traverse(function (object) {
+            if (object.isMesh) {
+                object.castShadow = true;
+            }
+        });
+
 
         this.barrels = [];
         this.weapon.children.forEach(child => {
@@ -26,7 +35,7 @@ class Turret extends Entity {
         this.selectedBarrelToShootIndex = 0;
 
         const reachOffset = 0.5;
-        this.reachDistance = ntityData.data.reachDistance + reachOffset;
+        this.reachDistance = entityData.data.reachDistance + reachOffset;
 
         this.turretWorldPosition = new THREE.Vector3();
 
@@ -42,7 +51,7 @@ class Turret extends Entity {
 
         const curve = new THREE.EllipseCurve(
             0, 0,            // ax, aY
-            ntityData.data.reachDistance, ntityData.data.reachDistance,           // xRadius, yRadius
+            entityData.data.reachDistance, entityData.data.reachDistance,           // xRadius, yRadius
             this.weaponRotationMinAngle, this.weaponRotationMaxAngle,  // aStartAngle, aEndAngle
             false,            // aClockwise
             0                 // aRotation
@@ -60,12 +69,6 @@ class Turret extends Entity {
 
     update(deltaTime) {
         super.update(deltaTime);
-
-        this.currentFiringTime += deltaTime;
-        if (this.currentFiringTime >= this.firingSpeed) {
-            this.currentFiringTime = 0;
-            this.shoot();
-        } return
 
         if (this.targetedEnemy) {
             this.currentFiringTime += deltaTime;
@@ -133,7 +136,7 @@ class Turret extends Entity {
         barrelDirection.applyEuler(this.weapon.rotation);
         barrelDirection.normalize();
 
-        new Bullet(10, this.bulletDamage, barrelWorldPos, barrelDirection);
+        new Bullet(10, this.bulletDamage, barrelWorldPos, barrelDirection, this.scene);
     }
 
     findTargetMesh() {
@@ -143,12 +146,12 @@ class Turret extends Entity {
 
         this.mesh.getWorldPosition(this.turretWorldPosition);
 
-        for (let i = 0; i < allEnemies.length; i++) {
-            allEnemies[i].mesh.getWorldPosition(this.targetEnemyWorldPosition);
+        for (let i = 0; i < this.scene.allEnemies.length; i++) {
+            this.scene.allEnemies[i].mesh.getWorldPosition(this.targetEnemyWorldPosition);
 
             if (this.turretWorldPosition.distanceToSquared(this.targetEnemyWorldPosition) <= this.reachDistance * this.reachDistance) {
 
-                return allEnemies[i].mesh;
+                return this.scene.allEnemies[i].mesh;
 
                 // this.targetEnemyWorldPosition.sub(this.turretWorldPosition);
 

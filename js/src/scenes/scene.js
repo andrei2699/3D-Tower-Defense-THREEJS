@@ -42,6 +42,10 @@ class Scene {
     }
 
     remove(gameobject) {
+        if (!gameobject) {
+            return;
+        }
+
         var index = this.gameobjects.indexOf(gameobject);
         if (index > -1) {
             this.gameobjects.splice(index, 1);

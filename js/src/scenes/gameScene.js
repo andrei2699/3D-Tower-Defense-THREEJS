@@ -114,6 +114,12 @@ class GameScene extends Scene {
                     }
                 }
             }
+            else if (event.button == 2) {
+                if (this.selectedToBePlacedObject) {
+                    this.remove(this.selectedToBePlacedObject);
+                    this.selectedToBePlacedObject = undefined;
+                }
+            }
         });
 
         this.sceneLeave();

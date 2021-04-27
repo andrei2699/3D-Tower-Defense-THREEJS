@@ -3,6 +3,7 @@ class GameScene extends Scene {
         super(scene, camera);
         this.mouse = new THREE.Vector2();
         this.selectedToBePlacedObject;
+        this.selectedTurret;
         this.isHoveringValidSpot;
 
         this.timeoutCount = 0;
@@ -17,8 +18,7 @@ class GameScene extends Scene {
             // changeScene(shopScene);
             console.log(allTurretData[0])
 
-            this.remove(this.selectedToBePlacedObject);
-            this.selectedToBePlacedObject = new PlaceableTurret(allTurretData[0]);
+            this.selectedToBePlacedObject = new Turret(allTurretData[0], this);
             this.add(this.selectedToBePlacedObject);
             this.selectedToBePlacedObject.setMaterialColor(0x00ff00);
         })
@@ -57,31 +57,37 @@ class GameScene extends Scene {
         });
 
         this.addEventListener("pointerdown", (event) => {
+
+            if (this.selectedTurret) {
+                this.selectedTurret.setReachRadiusVisibility(false);
+            }
+
             if (event.button == 0) {
 
-                if (this.selectedToBePlacedObject && this.isHoveringValidSpot) {
+                if (this.selectedToBePlacedObject) {
+                    if (this.isHoveringValidSpot) {
+                        this.selectedToBePlacedObject.place();
+                        var gridPosition = this._calculateGridPosition(this.selectedToBePlacedObject.mesh.position)
+                        this.map[gridPosition.x][gridPosition.z] = 5;
+                        this.selectedToBePlacedObject = undefined;
+                    }
+                } else {
+                    const intersections = this.raycastFromCamera(true);
 
-                    this.selectedToBePlacedObject.place();
-                    var gridPosition = this._calculateGridPosition(this.selectedToBePlacedObject.mesh.position)
-                    this.remove(this.selectedToBePlacedObject);
+                    for (let i = 0; i < intersections.length; i++) {
+                        const intersection = intersections[i];
 
-                    var turret = new Turret(this.selectedToBePlacedObject.data, this)
-                    turret.mesh.position.set(gridPosition.x, gridPosition.y, gridPosition.z);
-                    turret.weaponAngle = this.selectedToBePlacedObject.weaponAngle;
-                    this.add(turret)
+                        if (intersection.object.ignoreRaycast) {
+                            continue;
+                        }
 
-                    this.map[gridPosition.x][gridPosition.z] = 5;
-                    this.selectedToBePlacedObject = undefined;
+                        if (intersection.object.parent && intersection.object.parent.isTurret && intersection.object.parent.component) {
+                            this.selectedTurret = intersection.object.parent.component;
+                            this.selectedTurret.setReachRadiusVisibility(true);
+                            break;
+                        }
+                    }
                 }
-
-                // const intersections = this.raycastFromCamera(true);
-
-                // intersections.forEach(intersection => {
-                //     if (intersection.object.parent && intersection.object.parent.isTurret && intersection.object.parent.component) {
-                //         intersection.object.parent.component.setReachRadiusVisibility(true);
-                //         this.electedToBePlacedObject = intersection.object.parent.component;
-                //     }
-                // });
             }
         });
 

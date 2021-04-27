@@ -14,8 +14,8 @@ const renderer = createRenderer();
 
 var gameScene = new GameScene(createScene(), createCamera());
 
-var shopScene = new ShopScene(CreateMenuScene(), createCamera());
-shopScene.addToScene(createLight())
+var testScene = new TestScene(CreateMenuScene(), createCamera());
+testScene.addToScene(createLight())
 
 var mainMenuScene = new MainMenuScene(createScene(), createCamera());
 mainMenuScene.addToScene(createLight());
@@ -38,7 +38,7 @@ gameScene.setMap('assets/levels/level1.json')
 
 loadModels(() => {
     console.log("objects loaded")
-    shopScene.loadModels();
+    testScene.loadModels();
 });
 
 // for (const [name, object] of Object.entries(cubes)) {
@@ -98,10 +98,10 @@ function onKeyDown(event) {
         } break;
 
         case "KeyR": {
-            if (currentScene == shopScene) {
+            if (currentScene == testScene) {
                 changeScene(gameScene);
             } else {
-                changeScene(shopScene);
+                changeScene(testScene);
             }
         } break;
     }

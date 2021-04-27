@@ -12,13 +12,15 @@
     --red-color: hsl(0, 82%, 51%);
 }
 
-#game-shop-title-container {
+/* #game-shop-title-container {
     top: 10px;
-    display: none;
-    /* flex */
-}
+    display: none; */
 
-#game-shop-title {
+/* flex */
+
+/* } */
+
+/* #game-shop-title {
     width: 30%;
     text-align: center;
     z-index: 100;
@@ -30,7 +32,7 @@
     text-shadow: 2px 2px #6b5e5e;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 25px;
-}
+} */
 
 #main-menu-container {
     height: 100%;

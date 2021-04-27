@@ -1,4 +1,4 @@
-class ShopScene extends Scene {
+class TestScene extends Scene {
     constructor(scene, camera) {
         super(scene, camera);
 
@@ -36,9 +36,5 @@ class ShopScene extends Scene {
 
             this.addToScene(cube);
         }
-
-        allTurretData.forEach(data => {
-            this.add(new BasicTurret(data));
-        });
     }
 }

@@ -9,6 +9,7 @@ class Turret extends Entity {
         this.firingSpeed = entityData.data.firingSpeed;
         this.currentFiringTime = 0;
         this.bulletDamage = entityData.data.bulletDamage;
+        this.isPlaced = false;
 
         this.weapon = undefined;
         for (let i = 0; i < this.mesh.children.length; i++) {
@@ -17,6 +18,7 @@ class Turret extends Entity {
                 break;
             }
         }
+
         for (let i = 0; i < this.mesh.children.length; i++) {
             this.mesh.children[i].material = this.mesh.children[i].material.clone();
         }
@@ -67,14 +69,15 @@ class Turret extends Entity {
         this.reachEllipse = new THREE.Line(geometry, material);
         this.reachEllipse.setRotationFromQuaternion(this.weapon.quaternion);
         this.reachEllipseEuler = new THREE.Euler();
-
-        // scene.add(this.reachEllipse);
+        this.reachEllipse.ignoreRaycast = true;
+        this.reachEllipse.position.set(this.mesh.position.x, this.mesh.position.y + this.mesh.scale.y / 2, this.mesh.position.z);
+        this.mesh.add(this.reachEllipse);
     }
 
     update(deltaTime) {
         super.update(deltaTime);
 
-        if (this.targetedEnemy) {
+        if (this.isPlaced && this.targetedEnemy) {
             this.currentFiringTime += deltaTime;
             if (this.currentFiringTime >= this.firingSpeed) {
                 this.currentFiringTime = 0;
@@ -96,8 +99,7 @@ class Turret extends Entity {
             if (distance > this.reachDistance) {
                 this.targetedEnemy = undefined;
             }
-        }
-        else {
+        } else {
             this.currentFiringTime = 0;
 
             this.weaponAngle += deltaTime * this.weaponRotateDirection;
@@ -113,14 +115,16 @@ class Turret extends Entity {
             this.weaponEuler.set(Math.PI / 2, 0, this.weaponAngle);
             this.weapon.setRotationFromEuler(this.weaponEuler);
 
-            this.targetedEnemy = this.findTargetMesh();
+            if (this.isPlaced) {
+                this.targetedEnemy = this.findTargetMesh();
+            }
         }
-
-        this.reachEllipse.position.set(this.mesh.position.x, this.mesh.position.y + this.mesh.scale.y / 2, this.mesh.position.z);
     }
 
     place() {
+        this.isPlaced = true;
         this.setReachRadiusVisibility(false);
+        this.setMaterialColor(0xffffff);
     }
 
     setReachRadiusVisibility(visible) {

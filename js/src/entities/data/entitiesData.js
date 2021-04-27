@@ -10,7 +10,7 @@ const turretData = [
             damage: 1,
             speed: 20,
             radius: 0.05,
-            color: 0x694b11
+            color: 0xedd326
         }
     }
 ];

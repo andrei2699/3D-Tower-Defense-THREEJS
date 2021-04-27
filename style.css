@@ -62,13 +62,13 @@
 }
 
 #shop-container {
-    display: flex;
+    display: none;
     justify-content: start;
     overflow-y: auto;
     height: 60vh;
     width: auto;
     left: 4px;
-    top: 10%;
+    top: 12%;
     padding: 16px;
     flex-direction: column;
     background: bisque;
@@ -238,6 +238,10 @@
     opacity: 0;
 }
 
+#goToShopButton {
+    margin-top: -8px;
+}
+
 .margin-left {
     margin-left: 20vh;
 }
@@ -260,5 +264,39 @@
     100% {
         transform: translate(110%, -20vh);
         opacity: 0;
+    }
+}
+
+.hide-shop-panel {
+    display: flex !important;
+    animation-name: hideShopPanelAnimation;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.show-shop-panel {
+    display: flex !important;
+    animation-name: showShopPanelAnimation;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes hideShopPanelAnimation {
+    0% {
+        transform: translateX(-105%);
+    }
+    100% {
+        transform: translateX(2%);
+    }
+}
+
+@keyframes showShopPanelAnimation {
+    0% {
+        transform: translateX(2%);
+    }
+    100% {
+        transform: translateX(-105%);
     }
 }

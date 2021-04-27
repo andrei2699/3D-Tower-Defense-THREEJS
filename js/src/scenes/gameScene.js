@@ -9,6 +9,7 @@ class GameScene extends Scene {
         this.timeoutCount = 0;
         this.turretEnemyDeadEventHandlers = [];
         this.gameIsOver = false;
+        this.shopPanelVisibility = true;
 
         document.getElementById("nextWaveButton").addEventListener("click", (event) => {
             this.timeoutCount = 1;
@@ -17,8 +18,7 @@ class GameScene extends Scene {
         })
 
         document.getElementById("goToShopButton").addEventListener("click", (event) => {
-
-            this.shopPanel.style.display = (this.shopPanel.style.display == "flex") ? "none" : "flex";
+            this._toggleShopPanel();
         })
 
         this.waveFinishedPanel = document.getElementById("game-wave-finished-container");
@@ -280,7 +280,6 @@ class GameScene extends Scene {
             this.addMoneyText.classList.add("add-money-value-negative");
         }
 
-
         this.addMoneyText.classList.remove("add-value");
 
         void this.addMoneyText.offsetWidth;
@@ -360,6 +359,21 @@ class GameScene extends Scene {
             this.waveRemainingEnemiesCount = wave.enemyCount;
             this.updateEnemiesLeft()
             this.updateWave(wave.waveIndex)
+        }
+    }
+
+    _toggleShopPanel() {
+        this.shopPanel.classList.remove("hide-shop-panel");
+        this.shopPanel.classList.remove("show-shop-panel");
+
+        void this.addMoneyText.offsetWidth;
+
+        this.shopPanelVisibility = !this.shopPanelVisibility;
+        if (this.shopPanelVisibility) {
+            this.shopPanel.classList.add("show-shop-panel");
+        }
+        else {
+            this.shopPanel.classList.add("hide-shop-panel");
         }
     }
 

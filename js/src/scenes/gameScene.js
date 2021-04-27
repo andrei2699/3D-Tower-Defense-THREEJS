@@ -20,7 +20,7 @@ class GameScene extends Scene {
 
             this.selectedToBePlacedObject = new Turret(allTurretData[0], this);
             this.add(this.selectedToBePlacedObject);
-            this.selectedToBePlacedObject.setMaterialColor(0x00ff00);
+            this.selectedToBePlacedObject.setMaterialColorError(false);
         })
 
         this.waveFinishedPanel = document.getElementById("game-wave-finished-container");
@@ -58,11 +58,10 @@ class GameScene extends Scene {
 
         this.addEventListener("pointerdown", (event) => {
 
-            if (this.selectedTurret) {
-                this.selectedTurret.setReachRadiusVisibility(false);
-            }
-
             if (event.button == 0) {
+                if (this.selectedTurret) {
+                    this.selectedTurret.setReachRadiusVisibility(false);
+                }
 
                 if (this.selectedToBePlacedObject) {
                     if (this.isHoveringValidSpot) {
@@ -107,11 +106,11 @@ class GameScene extends Scene {
                     var gridPosition = this._calculateGridPosition(intersects[i].point);
 
                     if (!intersects[i].object.isPath && this._checkIfHoverPositionIsCorrect(gridPosition)) {
-                        this.selectedToBePlacedObject.setMaterialColor(0x00ff00);
+                        this.selectedToBePlacedObject.setMaterialColorError(false);
 
                         this.isHoveringValidSpot = true;
                     } else {
-                        this.selectedToBePlacedObject.setMaterialColor(0xff0000);
+                        this.selectedToBePlacedObject.setMaterialColorError(true);
                     }
 
                     this.selectedToBePlacedObject.mesh.position.set(gridPosition.x, gridPosition.y, gridPosition.z);

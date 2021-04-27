@@ -24,7 +24,7 @@ var currentScene;
 changeScene(gameScene);
 gameScene.setMap('assets/levels/level1.json')
 // changeScene(mainMenuScene);
-// changeScene(shopScene);
+// changeScene(testScene);
 
 // const interactionManager = new InteractionManager(
 //     renderer,
@@ -161,6 +161,12 @@ function createRenderer() {
 function createScene() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xA0A0A0);
+    return scene;
+}
+
+function CreateMenuScene() {
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xaaaaaa);
     return scene;
 }
 

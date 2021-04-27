@@ -22,7 +22,7 @@ class Turret extends Entity {
         for (let i = 0; i < this.mesh.children.length; i++) {
             this.mesh.children[i].material = this.mesh.children[i].material.clone();
         }
-        this.setMaterialColor(0xffffff);
+        this._setMaterialColor(0xffffff);
 
         this.mesh.castShadow = true;
         this.mesh.traverse(function (object) {
@@ -55,23 +55,12 @@ class Turret extends Entity {
         this.weaponRotationMaxAngle = Math.PI * 2;
         this.rotationAngle = 0;
 
-        const curve = new THREE.EllipseCurve(
-            0, 0,            // ax, aY
-            entityData.data.reachDistance, entityData.data.reachDistance,           // xRadius, yRadius
-            this.weaponRotationMinAngle, this.weaponRotationMaxAngle,  // aStartAngle, aEndAngle
-            false,            // aClockwise
-            0                 // aRotation
-        );
+        this.displayRadius = new DisplayRadius(entityData.data.reachDistance, this.weaponRotationMinAngle, this.weaponRotationMaxAngle);
 
-        const points = curve.getPoints(50);
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const material = new THREE.LineBasicMaterial({ color: 0x00ff00 });
-        this.reachEllipse = new THREE.Line(geometry, material);
-        this.reachEllipse.setRotationFromQuaternion(this.weapon.quaternion);
-        this.reachEllipseEuler = new THREE.Euler();
-        this.reachEllipse.ignoreRaycast = true;
-        this.reachEllipse.position.set(this.mesh.position.x, this.mesh.position.y + this.mesh.scale.y / 2, this.mesh.position.z);
-        this.mesh.add(this.reachEllipse);
+        this.displayRadius.setQuaternion(this.weapon.quaternion);
+        this.displayRadius.setPosition(this.mesh.position.x, this.mesh.position.y + this.mesh.scale.y / 2, this.mesh.position.z);
+        this.mesh.add(this.displayRadius.reachEllipse);
+        this.mesh.add(this.displayRadius.reachEllipseRing);
     }
 
     update(deltaTime) {
@@ -124,11 +113,11 @@ class Turret extends Entity {
     place() {
         this.isPlaced = true;
         this.setReachRadiusVisibility(false);
-        this.setMaterialColor(0xffffff);
+        this._setMaterialColor(0xffffff);
     }
 
     setReachRadiusVisibility(visible) {
-        this.reachEllipse.visible = visible;
+        this.displayRadius.setVisibility(visible);
     }
 
     shoot() {
@@ -181,7 +170,16 @@ class Turret extends Entity {
             angle >= this.weaponRotationMinAngle + this.rotationAngle;
     }
 
-    setMaterialColor(color) {
+    setMaterialColorError(error) {
+        if (error) {
+            this._setMaterialColor(0xff0000)
+        } else {
+            this._setMaterialColor(0x00ff00);
+        }
+        this.displayRadius.updateColor(error);
+    }
+
+    _setMaterialColor(color) {
         this.mesh.traverse(function (object) {
             if (object.isMesh && object.material.color) {
                 object.material.color = new THREE.Color(color);

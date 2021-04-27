@@ -25,16 +25,23 @@ class TestScene extends Scene {
     }
 
     loadModels() {
+        for (let i = 0; i < allTurretData.length * 4; i++) {
 
-        for (let i = 0; i < allTurretData.length * 2; i++) {
+            var turret = new Turret(allTurretData[0], this);
+            this.add(turret);
 
-            const geometry = new THREE.BoxGeometry();
-            const material = new THREE.MeshLambertMaterial({ color: 0x83aafb });
-            const cube = new THREE.Mesh(geometry, material);
-            cube.position.set(i * GridSize, -0.5, 0);
-            cube.scale.set(GridSize, 1, GridSize);
-
-            this.addToScene(cube);
+            turret.mesh.position.set(i * GridSize * 4, 0, i * GridSize * 4);
         }
+
+        // for (let i = 0; i < allTurretData.length * 2; i++) {
+
+        //     const geometry = new THREE.BoxGeometry();
+        //     const material = new THREE.MeshLambertMaterial({ color: 0x83aafb });
+        //     const cube = new THREE.Mesh(geometry, material);
+        //     cube.position.set(i * GridSize, -0.5, 0);
+        //     cube.scale.set(GridSize, 1, GridSize);
+
+        //     this.addToScene(cube);
+        // }
     }
 }

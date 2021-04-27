@@ -1,16 +1,19 @@
-const turretData = [{
-    name: "2 Barrel Turret",
-    assetPath: 'assets/models/turrets/BasicTurret.json',
-    reachDistance: 2.5,
-    firingSpeed: 0.25,
-    price: 10,
-    bulletData: {
-        damage: 1,
-        speed: 20,
-        radius: 0.05,
-        color: 0x694b11
+const turretData = [
+    {
+        name: "2 Barrel Turret",
+        assetPath: 'assets/models/turrets/BasicTurret.json',
+        imagePath: 'assets/images/img1.jpg',
+        reachDistance: 2.5,
+        firingSpeed: 0.25,
+        price: 10,
+        bulletData: {
+            damage: 1,
+            speed: 20,
+            radius: 0.05,
+            color: 0x694b11
+        }
     }
-}];
+];
 
 const enemiesData = [{
     name: "basic",

@@ -16,12 +16,8 @@ class GameScene extends Scene {
         })
 
         document.getElementById("goToShopButton").addEventListener("click", (event) => {
-            // changeScene(shopScene);
-            console.log(allTurretData[0])
 
-            this.selectedToBePlacedObject = new Turret(allTurretData[0], this);
-            this.add(this.selectedToBePlacedObject);
-            this.selectedToBePlacedObject.setMaterialColorError(false);
+            this.shopPanel.style.display = (this.shopPanel.style.display == "flex") ? "none" : "flex";
         })
 
         this.waveFinishedPanel = document.getElementById("game-wave-finished-container");
@@ -40,12 +36,19 @@ class GameScene extends Scene {
         this.turretDetailsFiringSpeedText = document.getElementById("turret-firing-speed-value");
         this.turretDetailsDamageText = document.getElementById("turret-damage-value");
 
+        this.shopPanel = document.getElementById("shop-container");
+        this.shopContentPanel = document.getElementById("shop-content-container");
+
+        this._CreateShopPanel();
+
         this.lives = 3;
-        this.money = 100;
+        this.money = 20;
         this.waveCount = 0;
         this.waveTotalEnemiesCount = 0;
         this.waveRemainingEnemiesCount = 0;
         this.allEnemies = [];
+
+        this._UpdateShopPanelItems();
 
         this.setWaveFinishedPanelVisibility(false);
 
@@ -73,7 +76,11 @@ class GameScene extends Scene {
 
                 if (this.selectedToBePlacedObject) {
                     if (this.isHoveringValidSpot) {
+
+                        this.updateMoney(- this.selectedToBePlacedObject.data.price);
+
                         this.selectedToBePlacedObject.place();
+
                         var gridPosition = this._calculateGridPosition(this.selectedToBePlacedObject.mesh.position)
                         this.map[gridPosition.x][gridPosition.z] = 5;
                         this.selectedToBePlacedObject = undefined;
@@ -131,6 +138,12 @@ class GameScene extends Scene {
     }
 
     _checkIfHoverPositionIsCorrect(gridPosition) {
+        if (gridPosition.x < 0 || gridPosition.y < 0) {
+            return false;
+        }
+        if (gridPosition.x >= this.map.length || gridPosition.x >= this.map[0].length) {
+            return false;
+        }
         return this.map[gridPosition.x][gridPosition.z] == 0;
     }
 
@@ -219,7 +232,7 @@ class GameScene extends Scene {
             this.turretDetailsNameText.innerHTML = data.name;
             this.turretDetailsReachDistanceText.innerHTML = data.reachDistance;
             this.turretDetailsFiringSpeedText.innerHTML = data.firingSpeed;
-            this.turretDetailsDamageText.innerHTML = data.bulletDamage;
+            this.turretDetailsDamageText.innerHTML = data.bulletData.damage;
         }
     }
 
@@ -228,17 +241,29 @@ class GameScene extends Scene {
     }
 
     updateMoney(amount) {
+
+        this.addMoneyText.classList.remove("add-money-value-positive");
+        this.addMoneyText.classList.remove("add-money-value-negative");
+
         if (amount > 0) {
             this.addMoneyText.innerHTML = "+" + amount;
-
-            this.addMoneyText.classList.remove("add-value");
-
-            void this.addMoneyText.offsetWidth;
-            this.addMoneyText.classList.add("add-value");
+            this.addMoneyText.classList.add("add-money-value-positive");
         }
+        else {
+            this.addMoneyText.innerHTML = amount;
+            this.addMoneyText.classList.add("add-money-value-negative");
+        }
+
+
+        this.addMoneyText.classList.remove("add-value");
+
+        void this.addMoneyText.offsetWidth;
+        this.addMoneyText.classList.add("add-value");
 
         this.money += amount;
         this.moneyText.innerHTML = this.money;
+
+        this._UpdateShopPanelItems();
     }
 
     removeOneLife() {
@@ -310,6 +335,84 @@ class GameScene extends Scene {
             this.waveRemainingEnemiesCount = wave.enemyCount;
             this.updateEnemiesLeft()
             this.updateWave(wave.waveIndex)
+        }
+    }
+
+    _UpdateShopPanelItems() {
+        for (let i = 0; i < this.shopContentPanel.children.length; i++) {
+            const shopItemDiv = this.shopContentPanel.children[i];
+
+
+            var notEnoughMoneyDiv = shopItemDiv.getElementsByClassName("shop-content-item-not-enough-money")[0];
+            var button = shopItemDiv.getElementsByTagName("button")[0];
+
+            if (turretData[i].price > this.money) {
+
+                button.disabled = true;
+                notEnoughMoneyDiv.style.display = "block";
+            }
+            else {
+                button.disabled = false;
+                notEnoughMoneyDiv.style.display = "none";
+            }
+        }
+    }
+
+    _CreateShopPanel() {
+
+        for (let i = 0; i < turretData.length; i++) {
+            const data = turretData[i];
+
+            var contentItemDiv = document.createElement("div")
+            contentItemDiv.classList.add("shop-content-item");
+
+            contentItemDiv.appendChild(CreatePropertyInShopMenu("Name", data.name));
+            contentItemDiv.appendChild(CreatePropertyInShopMenu("Damage", data.bulletData.damage));
+            contentItemDiv.appendChild(CreatePropertyInShopMenu("Firing Speed", data.firingSpeed));
+            contentItemDiv.appendChild(CreatePropertyInShopMenu("Reach Distance", data.reachDistance));
+            contentItemDiv.appendChild(CreatePropertyInShopMenu("Price", data.price));
+
+            var contentItemImg = document.createElement("img");
+            contentItemImg.classList.add("shop-content-item-img");
+            contentItemImg.src = data.imagePath;
+            contentItemDiv.appendChild(contentItemImg);
+
+            var contentItemButton = document.createElement("button");
+            contentItemButton.classList.add("btn");
+            contentItemButton.classList.add("btn-style");
+            contentItemButton.classList.add("btn-blue");
+            contentItemButton.innerHTML = "BUY"
+            contentItemButton.onclick = (event) => {
+
+                if (!this.selectedToBePlacedObject || this.selectedToBePlacedObject.data != data) {
+                    this.selectedToBePlacedObject = new Turret(allTurretData[i], this);
+                    this.add(this.selectedToBePlacedObject);
+                    this.selectedToBePlacedObject.setMaterialColorError(false);
+                }
+            }
+            contentItemDiv.appendChild(contentItemButton);
+
+            var contentItemNotEnoughMoney = document.createElement("div");
+            contentItemNotEnoughMoney.classList.add("shop-content-item-not-enough-money");
+            contentItemNotEnoughMoney.innerHTML = "Not Enough Money!";
+            contentItemDiv.appendChild(contentItemNotEnoughMoney);
+
+            this.shopContentPanel.appendChild(contentItemDiv);
+        }
+
+        function CreatePropertyInShopMenu(name, value) {
+            var div = document.createElement("div");
+
+            var nameSpan = document.createElement("span");
+            nameSpan.classList.add("shop-content-item-title");
+            nameSpan.innerHTML = name + ": ";
+
+            var valueSpan = document.createElement("span");
+            valueSpan.innerHTML = value;
+
+            div.appendChild(nameSpan);
+            div.appendChild(valueSpan);
+            return div;
         }
     }
 }

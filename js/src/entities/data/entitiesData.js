@@ -3,8 +3,13 @@ const turretData = [{
     assetPath: 'assets/models/turrets/BasicTurret.json',
     reachDistance: 2.5,
     firingSpeed: 0.25,
-    bulletDamage: 1,
-    price: 10
+    price: 10,
+    bulletData: {
+        damage: 1,
+        speed: 20,
+        radius: 0.05,
+        color: 0x694b11
+    }
 }];
 
 const enemiesData = [{
@@ -27,15 +32,16 @@ const enemiesData = [{
 
 const waveData = [
     {
-        enemyCount: 5,
-        enemyTypes: ['small'],
-        spawnTime: 0.4
-    },
-    {
         enemyCount: 3,
         enemyTypes: ['basic'],
         spawnTime: 1
     },
+    {
+        enemyCount: 5,
+        enemyTypes: ['small'],
+        spawnTime: 0.4
+    },
+
     {
         enemyCount: 4,
         enemyTypes: ['basic', 'small'],

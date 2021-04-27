@@ -7,6 +7,7 @@ class GameScene extends Scene {
         this.isHoveringValidSpot;
 
         this.timeoutCount = 0;
+        this.turretEnemyDeadEventHandlers = [];
 
         document.getElementById("nextWaveButton").addEventListener("click", (event) => {
             this.timeoutCount = 1;
@@ -269,6 +270,10 @@ class GameScene extends Scene {
         if (enemyHasArrivedAtDestination) {
             this.removeOneLife();
         }
+
+        this.turretEnemyDeadEventHandlers.forEach(handler => {
+            handler(enemy.mesh)
+        });
 
         this.remove(enemy);
         var index = this.allEnemies.indexOf(enemy);

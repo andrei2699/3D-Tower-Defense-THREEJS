@@ -9,7 +9,6 @@ class Turret extends Entity {
 
         this.firingSpeed = entityData.data.firingSpeed;
         this.currentFiringTime = 0;
-        this.bulletDamage = entityData.data.bulletDamage;
         this.isPlaced = false;
 
         this.weapon = undefined;
@@ -49,12 +48,23 @@ class Turret extends Entity {
         this.targetedEnemy = undefined;
         this.targetEnemyWorldPosition = new THREE.Vector3();
 
+        this.scene.turretEnemyDeadEventHandlers.push((enemy) => {
+            if (enemy == this.targetedEnemy) {
+                this.targetedEnemy = undefined;
+
+                if (this.weaponAngle >= this.weaponRotationMaxAngle) {
+                    this.weaponAngle -= Math.PI * 2;
+                } else if (this.weaponAngle <= this.weaponRotationMinAngle) {
+                    this.weaponAngle += Math.PI * 2;
+                }
+            }
+        });
+
         this.weaponEuler = new THREE.Euler();
         this.weaponAngle = 0;
         this.weaponRotateDirection = 1;
         this.weaponRotationMinAngle = 0;
         this.weaponRotationMaxAngle = Math.PI * 2;
-        this.rotationAngle = 0;
 
         this.displayRadius = new DisplayRadius(entityData.data.reachDistance, this.weaponRotationMinAngle, this.weaponRotationMaxAngle);
 
@@ -81,9 +91,9 @@ class Turret extends Entity {
             this.targetEnemyWorldPosition.sub(this.turretWorldPosition);
             this.targetEnemyWorldPosition.normalize();
 
-            var angle = Math.atan2(this.targetEnemyWorldPosition.x, this.targetEnemyWorldPosition.z);
-            this.weaponEuler.set(Math.PI / 2, 0, - angle);
+            this.weaponAngle = -Math.atan2(this.targetEnemyWorldPosition.x, this.targetEnemyWorldPosition.z);
 
+            this.weaponEuler.set(Math.PI / 2, 0, this.weaponAngle);
             this.weapon.setRotationFromEuler(this.weaponEuler);
 
             if (distance > this.reachDistance) {
@@ -93,13 +103,14 @@ class Turret extends Entity {
             this.currentFiringTime = 0;
 
             this.weaponAngle += deltaTime * this.weaponRotateDirection;
-            if (this.weaponAngle >= this.weaponRotationMaxAngle + this.rotationAngle) {
+            if (this.weaponAngle >= this.weaponRotationMaxAngle) {
                 this.weaponRotateDirection *= -1;
-                this.weaponAngle = this.weaponRotationMaxAngle + this.rotationAngle;
+                this.weaponAngle = this.weaponRotationMaxAngle;
             }
-            if (this.weaponAngle <= this.weaponRotationMinAngle + this.rotationAngle) {
+
+            if (this.weaponAngle <= this.weaponRotationMinAngle) {
                 this.weaponRotateDirection *= -1;
-                this.weaponAngle = this.weaponRotationMinAngle + this.rotationAngle;
+                this.weaponAngle = this.weaponRotationMinAngle;
             }
 
             this.weaponEuler.set(Math.PI / 2, 0, this.weaponAngle);
@@ -134,7 +145,7 @@ class Turret extends Entity {
         barrelDirection.applyEuler(this.weapon.rotation);
         barrelDirection.normalize();
 
-        new Bullet(10, this.bulletDamage, barrelWorldPos, barrelDirection, this.scene);
+        new Bullet(this.data.bulletData, barrelWorldPos, barrelDirection, this.scene);
     }
 
     findTargetMesh() {
@@ -167,8 +178,8 @@ class Turret extends Entity {
             angle += Math.PI * 2;
         }
 
-        return angle <= this.weaponRotationMaxAngle + this.rotationAngle &&
-            angle >= this.weaponRotationMinAngle + this.rotationAngle;
+        return angle <= this.weaponRotationMaxAngle &&
+            angle >= this.weaponRotationMinAngle;
     }
 
     setMaterialColorError(error) {

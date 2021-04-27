@@ -18,7 +18,9 @@ class GameScene extends Scene {
         })
 
         document.getElementById("goToShopButton").addEventListener("click", (event) => {
-            this._toggleShopPanel();
+            if (!this.gameIsOver) {
+                this._toggleShopPanel();
+            }
         })
 
         this.waveFinishedPanel = document.getElementById("game-wave-finished-container");
@@ -264,6 +266,10 @@ class GameScene extends Scene {
         this.setWaveFinishedPanelVisibility(false);
         this.showTurretDetailsPanel(false, undefined);
         this.shopPanel.style.display = "none";
+
+        if (!this.shopPanelVisibility) {
+            this._toggleShopPanel();
+        }
     }
 
     updateMoney(amount) {
@@ -319,6 +325,8 @@ class GameScene extends Scene {
     removeEnemy(enemy, enemyHasArrivedAtDestination) {
         if (enemyHasArrivedAtDestination) {
             this.removeOneLife();
+        } else {
+            this.updateMoney(enemy.data.money)
         }
 
         this.turretEnemyDeadEventHandlers.forEach(handler => {
@@ -335,11 +343,14 @@ class GameScene extends Scene {
         this.updateEnemiesLeft();
 
         if (this.waveRemainingEnemiesCount == 0) {
-            if (!this.waveManager.isFinished()) {
-                this.setWaveFinishedPanelVisibility(true);
+            if (this.waveManager.isFinished()) {
+                this.gameover(true);
             }
             else {
-                this.gameover(true);
+                const currentWave = this.waveManager.currentWave();
+                this.updateMoney(currentWave.money);
+
+                this.setWaveFinishedPanelVisibility(true);
             }
         }
     }

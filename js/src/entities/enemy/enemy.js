@@ -2,6 +2,7 @@ class Enemy extends AnimatedEntity {
     constructor(entityData, waypoints, scene) {
         super(entityData.mesh.scene);
 
+        this.data = entityData.data;
         this.mesh.scale.set(entityData.data.meshSize, entityData.data.meshSize, entityData.data.meshSize);
 
         this.speed = entityData.data.speed;

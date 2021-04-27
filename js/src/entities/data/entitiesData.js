@@ -21,7 +21,8 @@ const enemiesData = [{
     speed: 1,
     health: 10,
     meshSize: 0.5,
-    color: 0xffff00
+    color: 0xffff00,
+    money: 4
 },
 {
     name: "small",
@@ -29,25 +30,28 @@ const enemiesData = [{
     speed: 5,
     health: 2,
     meshSize: 0.25,
-    color: 0x00ffff
-
+    color: 0x00ffff,
+    money: 6
 }]
 
 const waveData = [
     {
         enemyCount: 3,
         enemyTypes: ['basic'],
-        spawnTime: 1
+        spawnTime: 1,
+        money: 20
     },
     {
         enemyCount: 5,
         enemyTypes: ['small'],
-        spawnTime: 0.4
+        spawnTime: 0.4,
+        money: 20
     },
 
     {
         enemyCount: 4,
         enemyTypes: ['basic', 'small'],
-        spawnTime: 0.8
+        spawnTime: 0.8,
+        money: 20
     }
 ]

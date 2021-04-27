@@ -14,6 +14,10 @@ class WaveManager {
         this.waves = waves;
     }
 
+    currentWave() {
+        return this.waves[this.currentWaveIndex];
+    }
+
     startNextWave() {
         this.isWavePlaying = true;
         this.currentEnemyIndex = 0;
@@ -73,6 +77,6 @@ class WaveManager {
     }
 
     isFinished() {
-        return this.currentWaveIndex >= this.waves.length;
+        return this.currentWaveIndex + 1 >= this.waves.length;
     }
 }

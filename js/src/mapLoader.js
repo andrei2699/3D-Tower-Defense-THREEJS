@@ -15,7 +15,7 @@ function loadMap(mapData, scene, gridSize) {
                 color = 0x1b630b;
                 isPath = false;
             }
-            else {
+            else if (mapData.map[x][y] > 0) {
 
                 if (mapData.map[x][y] == 2) {
                     color = 0x34c92c;

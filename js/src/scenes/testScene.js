@@ -25,9 +25,10 @@ class TestScene extends Scene {
     }
 
     loadModels() {
-        const enemy = new Enemy(allEnemiesData[1], [], this);
-        this.add(enemy)
-        this.addToBeBeUpdated(enemy.healthbar);
+
+        // const enemy = new Enemy(allEnemiesData[1], [], this);
+        // this.add(enemy)
+        // this.addToBeBeUpdated(enemy.healthbar);
 
         // for (let i = 0; i < allTurretData.length * 2; i++) {
 

@@ -14,6 +14,10 @@ class PlaceableTurret extends Entity {
             }
         }
 
+        for (let i = 0; i < this.mesh.children.length; i++) {
+            this.mesh.children[i].material = this.mesh.children[i].material.clone();
+        }
+
         this.mesh.castShadow = true;
         this.mesh.traverse(function (object) {
             if (object.isMesh) {
@@ -24,11 +28,6 @@ class PlaceableTurret extends Entity {
 
         const reachOffset = 0.5;
         this.reachDistance = entityData.data.reachDistance + reachOffset;
-
-        this.turretWorldPosition = new THREE.Vector3();
-
-        this.targetedEnemy = undefined;
-        this.targetEnemyWorldPosition = new THREE.Vector3();
 
         this.weaponEuler = new THREE.Euler();
         this.weaponAngle = 0;
@@ -79,14 +78,9 @@ class PlaceableTurret extends Entity {
     }
 
     setMaterialColor(color) {
-        var first = 0;
-
         this.mesh.traverse(function (object) {
             if (object.isMesh && object.material.color) {
-                first++;
-                if (first == 1) {
-                    object.material.color = new THREE.Color(color);
-                }
+                object.material.color = new THREE.Color(color);
             }
         });
     }

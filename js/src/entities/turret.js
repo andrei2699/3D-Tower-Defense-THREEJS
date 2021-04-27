@@ -17,6 +17,10 @@ class Turret extends Entity {
                 break;
             }
         }
+        for (let i = 0; i < this.mesh.children.length; i++) {
+            this.mesh.children[i].material = this.mesh.children[i].material.clone();
+        }
+        this.setMaterialColor(0xffffff);
 
         this.mesh.castShadow = true;
         this.mesh.traverse(function (object) {
@@ -171,5 +175,13 @@ class Turret extends Entity {
 
         return angle <= this.weaponRotationMaxAngle + this.rotationAngle &&
             angle >= this.weaponRotationMinAngle + this.rotationAngle;
+    }
+
+    setMaterialColor(color) {
+        this.mesh.traverse(function (object) {
+            if (object.isMesh && object.material.color) {
+                object.material.color = new THREE.Color(color);
+            }
+        });
     }
 }

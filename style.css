@@ -34,6 +34,25 @@
     border-radius: 25px;
 } */
 
+#turret-details-container {
+    display: none;
+    /* flex */
+    flex-direction: column;
+    font-weight: bold;
+    font-size: 1.2em;
+    background: bisque;
+    width: auto;
+    padding: 16px;
+    right: 0;
+    top: 16%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 25px;
+}
+
+#turret-name-value, #turret-reach-distance-value, #turret-firing-speed-value, #turret-damage-value {
+    font-weight: normal;
+}
+
 #main-menu-container {
     height: 100%;
     display: none;

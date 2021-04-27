@@ -2,6 +2,7 @@ class Turret extends Entity {
     constructor(entityData, scene) {
         super(entityData.mesh.scene.clone());
 
+        this.data = entityData.data;
         this.scene = scene;
         this.mesh.isTurret = true;
         this.mesh.component = this;

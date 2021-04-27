@@ -33,6 +33,12 @@ class GameScene extends Scene {
         this.removeLivesText = document.getElementById("remove-lives-value");
         this.waveStartingText = document.getElementById("wave-starting-text");
 
+        this.turretDetailsPanel = document.getElementById("turret-details-container");
+        this.turretDetailsNameText = document.getElementById("turret-name-value");
+        this.turretDetailsReachDistanceText = document.getElementById("turret-reach-distance-value");
+        this.turretDetailsFiringSpeedText = document.getElementById("turret-firing-speed-value");
+        this.turretDetailsDamageText = document.getElementById("turret-damage-value");
+
         this.lives = 3;
         this.money = 100;
         this.waveCount = 0;
@@ -60,6 +66,7 @@ class GameScene extends Scene {
 
             if (event.button == 0) {
                 if (this.selectedTurret) {
+                    this.showTurretDetailsPanel(false)
                     this.selectedTurret.setReachRadiusVisibility(false);
                 }
 
@@ -83,6 +90,7 @@ class GameScene extends Scene {
                         if (intersection.object.parent && intersection.object.parent.isTurret && intersection.object.parent.component) {
                             this.selectedTurret = intersection.object.parent.component;
                             this.selectedTurret.setReachRadiusVisibility(true);
+                            this.showTurretDetailsPanel(true, this.selectedTurret.data)
                             break;
                         }
                     }
@@ -201,6 +209,17 @@ class GameScene extends Scene {
 
     setWaveFinishedPanelVisibility(visible) {
         this.waveFinishedPanel.style.display = visible ? "flex" : "none";
+    }
+
+    showTurretDetailsPanel(visible, data) {
+        this.turretDetailsPanel.style.display = visible ? "flex" : "none";
+
+        if (visible) {
+            this.turretDetailsNameText.innerHTML = data.name;
+            this.turretDetailsReachDistanceText.innerHTML = data.reachDistance;
+            this.turretDetailsFiringSpeedText.innerHTML = data.firingSpeed;
+            this.turretDetailsDamageText.innerHTML = data.bulletDamage;
+        }
     }
 
     gameover() {

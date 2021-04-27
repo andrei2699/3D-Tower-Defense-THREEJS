@@ -8,6 +8,7 @@ class GameScene extends Scene {
 
         this.timeoutCount = 0;
         this.turretEnemyDeadEventHandlers = [];
+        this.gameIsOver = false;
 
         document.getElementById("nextWaveButton").addEventListener("click", (event) => {
             this.timeoutCount = 1;
@@ -28,6 +29,7 @@ class GameScene extends Scene {
         this.enemiesLeftText = document.getElementById("ememies-left-value");
         this.livesText = document.getElementById("lives-value");
         this.removeLivesText = document.getElementById("remove-lives-value");
+
         this.waveStartingText = document.getElementById("wave-starting-text");
 
         this.turretDetailsPanel = document.getElementById("turret-details-container");
@@ -42,7 +44,7 @@ class GameScene extends Scene {
         this._CreateShopPanel();
 
         this.lives = 3;
-        this.money = 20;
+        this.money = 30;
         this.waveCount = 0;
         this.waveTotalEnemiesCount = 0;
         this.waveRemainingEnemiesCount = 0;
@@ -58,6 +60,8 @@ class GameScene extends Scene {
         // this.updateMoney(151);
         this.updateWave(0);
 
+        this.addToScene(new THREE.AmbientLight(0x404040, 0.2));// soft white light
+
         this.orbitControls = new OrbitControls(this.camera, document.getElementById('app'));
         this.orbitControls.mouseMovementPan({ clientX: -window.innerWidth / 8, clientY: -window.innerHeight / 4 });
 
@@ -67,6 +71,10 @@ class GameScene extends Scene {
         });
 
         this.addEventListener("pointerdown", (event) => {
+
+            if (this.gameIsOver) {
+                return
+            }
 
             if (event.button == 0) {
                 if (this.selectedTurret) {
@@ -111,6 +119,11 @@ class GameScene extends Scene {
 
     update(deltaTime) {
         super.update(deltaTime);
+
+        if (this.gameIsOver) {
+            this.selectedToBePlacedObject = undefined;
+            return;
+        }
 
         if (this.selectedToBePlacedObject) {
 
@@ -174,8 +187,6 @@ class GameScene extends Scene {
                 me.waveManager.setData(me, waypoints, waveData);
                 me.waveCount = waveData.length;
 
-                me.addToScene(new THREE.AmbientLight(0x404040, 0.2));// soft white light
-
                 const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
                 dirLight.position.set(3, 10, 10);
                 var d = map.map.length;
@@ -191,7 +202,7 @@ class GameScene extends Scene {
                 me.addToScene(dirLight);
 
                 // const helper = new THREE.CameraHelper(dirLight.shadow.camera);
-                // me.addToScene(helper);
+                // this.addToScene(helper);
 
                 me.updateEnemiesLeft()
                 me.updateWave(0)
@@ -222,7 +233,13 @@ class GameScene extends Scene {
     }
 
     setWaveFinishedPanelVisibility(visible) {
-        this.waveFinishedPanel.style.display = visible ? "flex" : "none";
+        if (this.gameIsOver) {
+            this.waveFinishedPanel.style.display = "none";
+
+        } else {
+            this.waveFinishedPanel.style.display = visible ? "flex" : "none";
+
+        }
     }
 
     showTurretDetailsPanel(visible, data) {
@@ -236,8 +253,17 @@ class GameScene extends Scene {
         }
     }
 
-    gameover() {
-        console.log("GAME OVER");
+    gameover(win) {
+        this.gameIsOver = true;
+        if (win) {
+            this.waveStartingText.innerHTML = "GAME WON";
+        } else {
+            this.waveStartingText.innerHTML = "GAME OVER";
+        }
+
+        this.setWaveFinishedPanelVisibility(false);
+        this.showTurretDetailsPanel(false, undefined);
+        this.shopPanel.style.display = "none";
     }
 
     updateMoney(amount) {
@@ -278,7 +304,7 @@ class GameScene extends Scene {
             this.lives--;
             this.livesText.innerHTML = this.lives;
             if (this.lives == 0) {
-                this.gameover();
+                this.gameover(false);
             }
         }
     }
@@ -314,7 +340,7 @@ class GameScene extends Scene {
                 this.setWaveFinishedPanelVisibility(true);
             }
             else {
-                console.log("GAME WON")
+                this.gameover(true);
             }
         }
     }
@@ -328,7 +354,6 @@ class GameScene extends Scene {
             }, 1000);
         } else {
             this.waveStartingText.innerHTML = "";
-            console.log("Wave started")
             const wave = this.waveManager.startNextWave();
 
             this.waveTotalEnemiesCount = wave.enemyCount;

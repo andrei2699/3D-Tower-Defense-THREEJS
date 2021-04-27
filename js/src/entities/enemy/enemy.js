@@ -23,7 +23,8 @@ class Enemy extends AnimatedEntity {
         this.maxHealth = entityData.data.health;
         this.healthbar = new Healthbar(scene.camera);
         this.mesh.add(this.healthbar.mesh);
-        this.healthbar.mesh.position.set(0, 0.8, 0);
+
+        this.healthbar.mesh.position.set(0, this.mesh.children[0].scale.y * 2.4, 0);
 
         this.healthbar.updateHealth(1);
 
@@ -36,7 +37,9 @@ class Enemy extends AnimatedEntity {
         this.currentWaypointPosition = new THREE.Vector3();
         this.enemyWorldPosition = new THREE.Vector3();
 
-        this.mesh.position.set(this.waypoints[0].x, 0.52, this.waypoints[0].y)
+        if (this.waypoints.length > 0) {
+            this.mesh.position.set(this.waypoints[0].x, 0.52, this.waypoints[0].y)
+        }
 
         if (entityData.data.color) {
             var first = 0;

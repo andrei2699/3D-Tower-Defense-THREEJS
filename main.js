@@ -23,6 +23,7 @@ mainMenuScene.addToScene(createLight());
 var currentScene;
 changeScene(gameScene);
 gameScene.setMap('assets/levels/level1.json')
+
 // changeScene(mainMenuScene);
 // changeScene(testScene);
 

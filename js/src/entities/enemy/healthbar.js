@@ -19,7 +19,7 @@ class Healthbar extends Entity {
     }
 
     update(deltaTime) {
-        this.mesh.quaternion.copy(this.camera.quaternion);
+        this.mesh.lookAt(this.camera.position);
     }
 
     updateHealth(healthPercentage) {

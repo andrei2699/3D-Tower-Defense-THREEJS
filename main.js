@@ -15,7 +15,6 @@ const renderer = createRenderer();
 var gameScene = new GameScene(createScene(), createCamera());
 
 var testScene = new TestScene(CreateMenuScene(), createCamera());
-testScene.addToScene(createLight())
 
 var mainMenuScene = new MainMenuScene(createScene(), createCamera());
 mainMenuScene.addToScene(createLight());

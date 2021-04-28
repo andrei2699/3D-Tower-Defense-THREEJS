@@ -77,6 +77,6 @@ class WaveManager {
     }
 
     isFinished() {
-        return this.currentWaveIndex + 1 >= this.waves.length;
+        return this.currentWaveIndex >= this.waves.length;
     }
 }

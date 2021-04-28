@@ -5,6 +5,7 @@ class Enemy extends AnimatedEntity {
         this.data = entityData.data;
         this.mesh.scale.set(entityData.data.meshSize, entityData.data.meshSize, entityData.data.meshSize);
 
+        this.isDead = false;
         this.speed = entityData.data.speed;
         this.waypoints = waypoints;
         this.currentWaypointIndex = 0;
@@ -54,10 +55,29 @@ class Enemy extends AnimatedEntity {
                 }
             });
         }
+        this.elapsedTime = 1.0;
     }
 
     update(deltaTime) {
         super.update(deltaTime);
+
+        if (this.isDead) {
+            this.elapsedTime -= deltaTime;
+            var me = this;
+
+            this.mesh.traverse(function (object) {
+                if (object.isMesh) {
+                    object.material.uniforms.time.value = me.elapsedTime;
+                }
+            });
+
+            if (this.elapsedTime <= 0.0) {
+                this.parentScene.removeEnemy(this);
+            }
+
+            return;
+        }
+
         this.mixer.update(deltaTime)
 
         if (this.currentWaypointIndex >= this.waypoints.length) {
@@ -99,9 +119,79 @@ class Enemy extends AnimatedEntity {
     }
 
     die() {
-        this.parentScene.removeEnemy(this, this.health > 0);
+        this.isDead = true;
+
+        this._setDyingShader();
+
+        var index = this.mesh.children.indexOf(this.healthbar.mesh);
+        if (index > -1) {
+            this.mesh.children.splice(index, 1);
+        }
+
+        this.parentScene.removeEnemyFromAllEnemies(this, this.health > 0);
     }
 
+    _setDyingShader() {
+
+        this.mesh.traverse(function (object) {
+            if (object.isMesh && object.material.color) {
+
+                var color = object.material.color;
+
+                object.material = THREE.extendMaterial(THREE.MeshStandardMaterial, {
+                    header: 'varying vec2 vUv;',
+                    material: {
+                        skinning: true
+                    },
+                    uniforms: {
+                        time: 0
+                    },
+                    vertex: {
+                        'void main() {': 'vUv=uv;'
+                    },
+                    fragment: {
+                        '?void main()': helperFunctions(),
+                        '?uniform vec3 diffuse;': 'uniform float time;',
+                        'gl_FragColor = vec4( outgoingLight, diffuseColor.a );': _frag()
+                    }
+                });
+
+                object.material.uniforms.diffuse.value = color;
+                object.material.skinning = true;
+                object.material.side = THREE.DoubleSide;
+                object.material.transparent = true;
+            }
+        });
+
+        function helperFunctions() {
+            return `
+                const float noiseScale = 5.0;
+                const float edgeOffset = 0.05;
+                const vec3 edgeColor = vec3(0.5, 0.7, 0.5);
+
+                float noise(vec2 n) {
+                    const vec2 d = vec2(0.0, 1.0);
+                    vec2 b = floor(n), f = smoothstep(vec2(0.0), vec2(1.0), fract(n));
+                    return mix(mix(rand(b), rand(b + d.yx), f.x), mix(rand(b + d.xy), rand(b + d.yy), f.x), f.y);
+                }
+
+                float map(float value, float min1, float max1, float min2, float max2) {
+                    return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+                }
+                `;
+        }
+
+        function _frag() {
+            return `           
+                    float noiseValue = noise(vUv * noiseScale);                    
+                    float mask = step(noiseValue, time);
+                    float edgesMask = step(noiseValue, time + edgeOffset);
+                    float diff = clamp(edgesMask - mask, 0.0, 1.0);
+
+                    gl_FragColor = vec4(gl_FragColor.rgb * mask + edgeColor * diff, mask + edgesMask);
+                `;
+        }
+    }
     // startMovementTo(targetCoords) {
     //     const coords = { x: this.mesh.position.x, y: this.mesh.position.y };
     //     new TWEEN.Tween(coords)

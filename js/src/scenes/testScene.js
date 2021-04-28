@@ -9,7 +9,26 @@ class TestScene extends Scene {
         })
 
         this.orbitControls = new OrbitControls(this.camera, document.getElementById('app'));
-        this.orbitControls.mouseMovementPan({ clientX: -window.innerWidth / 8, clientY: -window.innerHeight / 4 })
+
+        this.addToScene(new THREE.AmbientLight(0x404040, 0.2));// soft white light
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(3, 10, 10);
+        var d = 3;
+        dirLight.castShadow = true;
+        dirLight.castShadow = true;
+        dirLight.shadow.camera.left = - d;
+        dirLight.shadow.camera.right = d;
+        dirLight.shadow.camera.top = d;
+        dirLight.shadow.camera.bottom = - d;
+        dirLight.shadowCameraVisible = true;
+        dirLight.shadow.camera.near = 1;
+        dirLight.shadow.camera.far = 50;
+        this.addToScene(dirLight);
+
+        const helper = new THREE.CameraHelper(dirLight.shadow.camera);
+        this.addToScene(helper);
+
 
         this.sceneLeave();
     }
@@ -26,9 +45,13 @@ class TestScene extends Scene {
 
     loadModels() {
 
-        // const enemy = new Enemy(allEnemiesData[1], [], this);
-        // this.add(enemy)
-        // this.addToBeBeUpdated(enemy.healthbar);
+        this.enemy = new Enemy(allEnemiesData[0], [], this);
+        this.add(this.enemy)
+        this.addToBeBeUpdated(this.enemy.healthbar);
+        // this.enemy.die();
+        setTimeout(() => {
+            this.enemy.die();
+        }, 1000);
 
         // for (let i = 0; i < allTurretData.length * 2; i++) {
 
@@ -40,5 +63,13 @@ class TestScene extends Scene {
 
         //     this.addToScene(cube);
         // }
+    }
+
+    removeEnemy() {
+        this.remove(this.enemy);
+    }
+
+    removeEnemyFromAllEnemies() {
+
     }
 }

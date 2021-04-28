@@ -331,7 +331,7 @@ class GameScene extends Scene {
         this.enemiesLeftText.innerHTML = this.waveRemainingEnemiesCount + "/" + this.waveTotalEnemiesCount;
     }
 
-    removeEnemy(enemy, enemyHasArrivedAtDestination) {
+    removeEnemyFromAllEnemies(enemy, enemyHasArrivedAtDestination) {
         if (enemyHasArrivedAtDestination) {
             this.removeOneLife();
         } else {
@@ -342,12 +342,14 @@ class GameScene extends Scene {
             handler(enemy.mesh)
         });
 
-        this.remove(enemy);
         var index = this.allEnemies.indexOf(enemy);
         if (index > -1) {
             this.allEnemies.splice(index, 1);
         }
+    }
 
+    removeEnemy(enemy) {
+        this.remove(enemy);
         this.waveRemainingEnemiesCount--;
         this.updateEnemiesLeft();
 

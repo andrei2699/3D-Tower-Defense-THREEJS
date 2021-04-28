@@ -2,6 +2,8 @@ class Enemy extends AnimatedEntity {
     constructor(entityData, waypoints, scene) {
         super(entityData.mesh.scene);
 
+        this.soundEffects = entityData.effects;
+
         this.data = entityData.data;
         this.mesh.scale.set(entityData.data.meshSize, entityData.data.meshSize, entityData.data.meshSize);
 
@@ -62,7 +64,7 @@ class Enemy extends AnimatedEntity {
         super.update(deltaTime);
 
         if (this.isDead) {
-            this.elapsedTime -= deltaTime;
+            this.elapsedTime -= deltaTime * 2.0;
             var me = this;
 
             this.mesh.traverse(function (object) {
@@ -120,6 +122,8 @@ class Enemy extends AnimatedEntity {
 
     die() {
         this.isDead = true;
+
+        playSoundEffect(this.soundEffects["death"])
 
         this._setDyingShader();
 

@@ -6,10 +6,13 @@ document.addEventListener("pointerdown", onDocumentMouseDown, false);
 document.addEventListener("keydown", onKeyDown, false);
 
 const GridSize = 1;
+var soundEffectsVolume = 1;
 
 var allTurretData = [];
 var allEnemiesData = [];
+var allSoundsBuffers = {};
 
+const audioListener = new THREE.AudioListener();
 const renderer = createRenderer();
 
 var gameScene = new GameScene(createScene(), createCamera());
@@ -107,40 +110,70 @@ function onKeyDown(event) {
     }
 }
 
+function playSoundEffect(soundBuffer, loop = false) {
+    var sound = new THREE.Audio(audioListener);
+    sound.setBuffer(soundBuffer);
+    sound.setLoop(loop);
+    sound.setVolume(1);
+    sound.play();
+}
+
 function loadModels(onAllModelsLoaded) {
     loader = new THREE.GLTFLoader();
+    var audioLoader = new THREE.AudioLoader();
 
-    var modelsCount = turretData.length + enemiesData.length;
-    var currentModelCount = 0;
+    var assetsCount = audioData.length;
+    currentCount = 0;
 
-    var assets = {};
+    audioData.forEach(data => {
+        audioLoader.load(data.path, function (buffer) {
+            allSoundsBuffers[data.name] = buffer;
 
-    loadEntityData(turretData, allTurretData);
-    loadEntityData(enemiesData, allEnemiesData);
-
-    function loadEntityData(array, otherArray) {
-        array.forEach(data => {
-            if (assets[data.assetPath]) {
-                addData(otherArray, data, assets[data.assetPath]);
-            }
-            else {
-                loader.load(data.assetPath, function (model) {
-                    assets[data.assetPath] = model;
-                    addData(otherArray, data, model);
-
-                }, undefined, function (error) {
-                    console.error(error);
-                });
+            currentCount++;
+            if (currentCount == assetsCount) {
+                loadMeshes();
             }
         });
-    }
+    });
 
-    function addData(vector, data, model) {
-        vector.push(new EntityData(data, model));
-        currentModelCount++;
-        if (currentModelCount == modelsCount) {
-            if (onAllModelsLoaded) {
-                onAllModelsLoaded();
+    function loadMeshes() {
+        assetsCount = turretData.length + enemiesData.length;
+        currentCount = 0;
+
+        var assets = {};
+
+        loadEntityData(turretData, allTurretData);
+        loadEntityData(enemiesData, allEnemiesData);
+
+        function loadEntityData(array, otherArray) {
+            array.forEach(data => {
+                if (assets[data.assetPath]) {
+                    addData(otherArray, data, assets[data.assetPath]);
+                }
+                else {
+                    loader.load(data.assetPath, function (model) {
+                        assets[data.assetPath] = model;
+                        addData(otherArray, data, model);
+
+                    }, undefined, function (error) {
+                        console.error(error);
+                    });
+                }
+            });
+        }
+
+        function addData(vector, data, model) {
+            var effects = {};
+            data.soundEffects.forEach(element => {
+                effects[element.action] = allSoundsBuffers[element.name];
+            });
+
+            vector.push(new EntityData(data, model, effects));
+            currentCount++;
+            if (currentCount == assetsCount) {
+                if (onAllModelsLoaded) {
+                    onAllModelsLoaded();
+                }
             }
         }
     }

@@ -2,6 +2,7 @@ class Turret extends Entity {
     constructor(entityData, scene) {
         super(entityData.mesh.scene.clone());
 
+        this.soundEffects = entityData.effects;
         this.data = entityData.data;
         this.scene = scene;
         this.mesh.isTurret = true;
@@ -123,6 +124,7 @@ class Turret extends Entity {
     }
 
     place() {
+        playSoundEffect(this.soundEffects["place"]);
         this.isPlaced = true;
         this.setReachRadiusVisibility(false);
         this._setMaterialColor(0xffffff);
@@ -133,6 +135,9 @@ class Turret extends Entity {
     }
 
     shoot() {
+
+        playSoundEffect(this.soundEffects["shoot"]);
+
         var barrelWorldPos = new THREE.Vector3();
         this.barrels[this.selectedBarrelToShootIndex].getWorldPosition(barrelWorldPos);
 

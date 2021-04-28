@@ -67,6 +67,8 @@ class GameScene extends Scene {
         this.orbitControls = new OrbitControls(this.camera, document.getElementById('app'));
         this.orbitControls.mouseMovementPan({ clientX: -window.innerWidth / 8, clientY: -window.innerHeight / 4 });
 
+        this.addToScene(audioListener);
+
         this.addEventListener("mousemove", (event) => {
             this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;

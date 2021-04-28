@@ -1,3 +1,18 @@
+const audioData = [
+    {
+        name: 'turretShot2',
+        path: 'assets/sounds/effects/TurretShot2.wav'
+    },
+    {
+        name: 'enemyDeath',
+        path: 'assets/sounds/effects/EnemyDeath.wav'
+    },
+    {
+        name: 'turretPlace',
+        path: 'assets/sounds/effects/TurretPlace.wav'
+    }
+];
+
 const turretData = [
     {
         name: "2 Barrel Turret",
@@ -11,7 +26,17 @@ const turretData = [
             speed: 20,
             radius: 0.05,
             color: 0xedd326
-        }
+        },
+        soundEffects: [
+            {
+                action: 'shoot',
+                name: 'turretShot2'
+            },
+            {
+                action: 'place',
+                name: 'turretPlace'
+            }
+        ]
     }
 ];
 
@@ -22,7 +47,13 @@ const enemiesData = [{
     health: 10,
     meshSize: 0.5,
     color: 0xffff00,
-    money: 4
+    money: 4,
+    soundEffects: [
+        {
+            action: 'death',
+            name: 'enemyDeath'
+        }
+    ]
 },
 {
     name: "small",
@@ -31,7 +62,13 @@ const enemiesData = [{
     health: 2,
     meshSize: 0.25,
     color: 0x00ffff,
-    money: 6
+    money: 6,
+    soundEffects: [
+        {
+            action: 'death',
+            name: 'enemyDeath'
+        }
+    ]
 }]
 
 const waveData = [

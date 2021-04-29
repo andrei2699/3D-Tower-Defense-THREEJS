@@ -7,11 +7,14 @@ document.addEventListener("keydown", onKeyDown, false);
 
 const GridSize = 1;
 var soundEffectsVolume = 1;
-var musicVolume = 1;
+var isPlayingMusic = 1;
 
 var allTurretData = [];
 var allEnemiesData = [];
+
 var allSoundsBuffers = {};
+var audioLoader = new THREE.AudioLoader();
+var musicSound;
 
 const audioListener = new THREE.AudioListener();
 const renderer = createRenderer();
@@ -44,6 +47,16 @@ loadModels(() => {
     console.log("objects loaded")
     testScene.loadModels();
 });
+
+audioLoader.load('assets/sounds/music/Upbeat Forever.mp3', function (buffer) {
+    musicSound = new THREE.Audio(audioListener);
+    musicSound.setBuffer(buffer);
+    musicSound.setLoop(true);
+    musicSound.setVolume(1);
+    musicSound.play();
+});
+
+
 
 // for (const [name, object] of Object.entries(cubes)) {
 //     object.addEventListener("click", (event) => {
@@ -81,6 +94,12 @@ function onDocumentMouseDown(event) {
     }
 }
 
+function onKeyDown(event) {
+    if (currentScene.eventListeners["keydown"]) {
+        currentScene.eventListeners["keydown"](event);
+    }
+}
+
 function changeScene(scene) {
     if (currentScene) {
         currentScene.sceneLeave();
@@ -89,9 +108,12 @@ function changeScene(scene) {
     currentScene.sceneEnter();
 }
 
-function onKeyDown(event) {
-    if (currentScene.eventListeners["keydown"]) {
-        currentScene.eventListeners["keydown"](event);
+function toggleMusicPlay() {
+    isPlayingMusic = !isPlayingMusic;
+    if (isPlayingMusic) {
+        musicSound.play();
+    } else {
+        musicSound.pause();
     }
 }
 
@@ -107,7 +129,6 @@ function playSoundEffect(soundBuffer, loop = false) {
 
 function loadModels(onAllModelsLoaded) {
     loader = new THREE.GLTFLoader();
-    var audioLoader = new THREE.AudioLoader();
 
     var assetsCount = audioData.length;
     currentCount = 0;

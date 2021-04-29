@@ -63,8 +63,8 @@ class GameScene extends Scene {
         });
         var musicImageButton = document.getElementById("musicVolume");
         musicImageButton.addEventListener("click", (event) => {
-            musicVolume = 1 - musicVolume;
-            if (musicVolume == 0) {
+            toggleMusicPlay();
+            if (!isPlayingMusic) {
                 musicImageButton.src = "assets/images/volume_off.png";
             } else {
                 musicImageButton.src = "assets/images/volume_up.png";
@@ -155,6 +155,9 @@ class GameScene extends Scene {
         this.addEventListener("keydown", (event) => {
             switch (event.code) {
                 case "Escape": {
+                    if (!this.shopPanelVisibility) {
+                        this._toggleShopPanel();
+                    }
                     this.setGameMenuVisibility(!this.gameIsPaused);
                 } break;
             }

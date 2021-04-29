@@ -6,6 +6,7 @@ class GameScene extends Scene {
         this.selectedTurret;
         this.isHoveringValidSpot;
 
+        this.gameIsPaused = false;
         this.timeoutCount = 0;
         this.turretEnemyDeadEventHandlers = [];
         this.gameIsOver = false;
@@ -42,6 +43,33 @@ class GameScene extends Scene {
 
         this.shopPanel = document.getElementById("shop-container");
         this.shopContentPanel = document.getElementById("shop-content-container");
+
+        this.gameMainPanel = document.getElementById("game-main-container");
+        document.getElementById("resumeButton").addEventListener("click", (event) => {
+            this.setGameMenuVisibility(false);
+        });
+        document.getElementById("toMainMenuButton").addEventListener("click", (event) => {
+
+        });
+
+        var effectsImageButton = document.getElementById("effectsVolume");
+        effectsImageButton.addEventListener("click", (event) => {
+            soundEffectsVolume = 1 - soundEffectsVolume;
+            if (soundEffectsVolume == 0) {
+                effectsImageButton.src = "assets/images/volume_off.png";
+            } else {
+                effectsImageButton.src = "assets/images/volume_up.png";
+            }
+        });
+        var musicImageButton = document.getElementById("musicVolume");
+        musicImageButton.addEventListener("click", (event) => {
+            musicVolume = 1 - musicVolume;
+            if (musicVolume == 0) {
+                musicImageButton.src = "assets/images/volume_off.png";
+            } else {
+                musicImageButton.src = "assets/images/volume_up.png";
+            }
+        });
 
         this._CreateShopPanel();
 
@@ -124,10 +152,22 @@ class GameScene extends Scene {
             }
         });
 
+        this.addEventListener("keydown", (event) => {
+            switch (event.code) {
+                case "Escape": {
+                    this.setGameMenuVisibility(!this.gameIsPaused);
+                } break;
+            }
+        });
+
         this.sceneLeave();
     }
 
     update(deltaTime) {
+        if (this.gameIsPaused) {
+            return;
+        }
+
         super.update(deltaTime);
 
         if (this.gameIsOver) {
@@ -243,6 +283,11 @@ class GameScene extends Scene {
         this.orbitControls.enabled = false;
         this.inGamePanel.style.display = "none";
         this.setWaveFinishedPanelVisibility(false);
+    }
+
+    setGameMenuVisibility(visible) {
+        this.gameMainPanel.style.display = visible ? "flex" : "none";
+        this.gameIsPaused = visible;
     }
 
     setWaveFinishedPanelVisibility(visible) {

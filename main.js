@@ -7,6 +7,7 @@ document.addEventListener("keydown", onKeyDown, false);
 
 const GridSize = 1;
 var soundEffectsVolume = 1;
+var musicVolume = 1;
 
 var allTurretData = [];
 var allEnemiesData = [];
@@ -89,33 +90,19 @@ function changeScene(scene) {
 }
 
 function onKeyDown(event) {
-
-    switch (event.code) {
-        case "Escape": {
-
-            if (currentScene == mainMenuScene) {
-                changeScene(gameScene);
-            } else {
-                changeScene(mainMenuScene);
-            }
-        } break;
-
-        case "KeyR": {
-            if (currentScene == testScene) {
-                changeScene(gameScene);
-            } else {
-                changeScene(testScene);
-            }
-        } break;
+    if (currentScene.eventListeners["keydown"]) {
+        currentScene.eventListeners["keydown"](event);
     }
 }
 
 function playSoundEffect(soundBuffer, loop = false) {
-    var sound = new THREE.Audio(audioListener);
-    sound.setBuffer(soundBuffer);
-    sound.setLoop(loop);
-    sound.setVolume(1);
-    sound.play();
+    if (soundEffectsVolume > 0) {
+        var sound = new THREE.Audio(audioListener);
+        sound.setBuffer(soundBuffer);
+        sound.setLoop(loop);
+        sound.setVolume(soundEffectsVolume);
+        sound.play();
+    }
 }
 
 function loadModels(onAllModelsLoaded) {

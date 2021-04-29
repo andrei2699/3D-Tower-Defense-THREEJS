@@ -104,6 +104,30 @@
     max-height: 200px;
 }
 
+#game-main-container {
+    height: 100%;
+    display: none;
+    /* flex */
+    flex-direction: column;
+    background: #b9b3b340;
+}
+
+.volume-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+    padding: 10px;
+}
+
+.volume-img {
+    margin-left: 16px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    border-radius: 25px;
+    background: burlywood;
+    cursor: pointer;
+}
+
 .btn {
     box-sizing: border-box;
     -webkit-appearance: none;

@@ -5,6 +5,20 @@ document.addEventListener("mousemove", onDocumentMouseMove, false);
 document.addEventListener("pointerdown", onDocumentMouseDown, false);
 document.addEventListener("keydown", onKeyDown, false);
 
+var musicWasPlaying;
+var isFocused = true;
+
+window.onfocus = function () {
+    isFocused = true;
+    setMusicPlaying(musicWasPlaying)
+}
+
+window.onblur = function () {
+    isFocused = false;
+    musicWasPlaying = isPlayingMusic;
+    setMusicPlaying(false)
+}
+
 const GridSize = 1;
 var soundEffectsVolume = 1;
 var isPlayingMusic = 1;
@@ -49,6 +63,7 @@ loadModels(() => {
 });
 
 audioLoader.load('assets/sounds/music/Upbeat Forever.mp3', function (buffer) {
+    console.log("Music Loaded");
     musicSound = new THREE.Audio(audioListener);
     musicSound.setBuffer(buffer);
     musicSound.setLoop(true);
@@ -109,7 +124,11 @@ function changeScene(scene) {
 }
 
 function toggleMusicPlay() {
-    isPlayingMusic = !isPlayingMusic;
+    setMusicPlaying(!isPlayingMusic)
+}
+
+function setMusicPlaying(playing) {
+    isPlayingMusic = playing;
     if (isPlayingMusic) {
         musicSound.play();
     } else {

@@ -14,6 +14,10 @@ class Scene {
     }
 
     update(deltaTime) {
+        if (!isFocused) {
+            return;
+        }
+
         this.gameobjects.forEach(gameobject => {
             gameobject.update(deltaTime);
         });

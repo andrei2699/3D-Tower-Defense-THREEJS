@@ -1,15 +1,16 @@
+@font-face {
+    font-family: kennyFont;
+    src: url("kenvector_future_thin.ttf");
+}
+
+body {
+    font-family: kennyFont;
+}
+
 .game-menu {
     position: absolute;
     width: 100%;
     justify-content: center;
-}
-
-:root {
-    --yellow-color: #f1c40f;
-    --green-color: hsl(110, 64%, 43%);
-    --blue-color: hsl(209, 89%, 50%);
-    --orange-color: hsl(37, 82%, 51%);
-    --red-color: hsl(0, 82%, 51%);
 }
 
 /* #game-shop-title-container {
@@ -53,14 +54,6 @@
     font-weight: normal;
 }
 
-#main-menu-container {
-    height: 100%;
-    display: none;
-    /* flex */
-    align-items: center;
-    flex-direction: column;
-}
-
 #shop-container {
     display: none;
     justify-content: start;
@@ -71,8 +64,6 @@
     top: 12%;
     padding: 16px;
     flex-direction: column;
-    background: bisque;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .shop-content-item {
@@ -128,79 +119,110 @@
     cursor: pointer;
 }
 
-.btn {
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    border: 2px solid #e74c3c;
-    border-radius: 0.6em;
-    color: #e74c3c;
-    cursor: pointer;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
+.noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.gametitle {
+    font-size: 3em;
+    z-index: 1;
+    margin-bottom: 10%;
+}
+
+#main-menu-container {
+    height: 100%;
+    display: none;
+    /* flex */
+    align-items: center;
+    flex-direction: column;
+}
+
+.grey-panel {
+    background-image: url(assets/images/ui/grey_panel.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 1;
+    padding: 8px;
     display: flex;
-    -webkit-align-self: center;
-    -ms-flex-item-align: center;
-    align-self: center;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1;
-    margin: 20px;
-    padding: 1.2em 2.8em;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.yellow-panel {
+    background-image: url(assets/images/ui/yellow_panel.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 1;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.grey-panel>* {
+    margin: 16px;
+}
+
+.gamebutton {
+    background-repeat: no-repeat;
+    z-index: 5;
     text-decoration: none;
     text-transform: uppercase;
+    cursor: pointer;
+    height: 50px;
+    width: 190px;
+    text-align: center;
     font-weight: 700;
-    z-index: 1;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
 }
 
-.btn:hover, .btn:focus {
-    color: #fff;
-    outline: 0;
+.green-button {
+    background-image: url("assets/images/ui/green_button04.png");
 }
 
-.btn-style {
-    color: #fff;
-    background-position: 100%;
-    background-size: 400%;
-    -webkit-transition: background 300ms ease-in-out;
-    transition: background 300ms ease-in-out;
+.green-button:active {
+    background-image: url("assets/images/ui/green_button05.png");
 }
 
-.btn-style:hover {
-    background-position: 0;
+.yellow-button {
+    background-image: url("assets/images/ui/yellow_button04.png");
 }
 
-.btn-yellow {
-    border-color: var(--yellow-color);
-    background-image: -webkit-linear-gradient(45deg, var(--yellow-color) 50%, transparent 50%);
-    background-image: linear-gradient(45deg, var(--yellow-color) 50%, transparent 50%);
+.yellow-button:active {
+    background-image: url("assets/images/ui/yellow_button05.png");
 }
 
-.btn-green {
-    border-color: var(--green-color);
-    background-image: -webkit-linear-gradient(45deg, var(--green-color) 50%, transparent 50%);
-    background-image: linear-gradient(45deg, var(--green-color) 50%, transparent 50%);
+.blue-button {
+    background-image: url("assets/images/ui/blue_button04.png");
 }
 
-.btn-blue {
-    border-color: var(--blue-color);
-    background-image: -webkit-linear-gradient(45deg, var(--blue-color) 50%, transparent 50%);
-    background-image: linear-gradient(45deg, var(--blue-color) 50%, transparent 50%);
+.blue-button:active {
+    background-image: url("assets/images/ui/blue_button05.png");
 }
 
-.btn-orange {
-    border-color: var(--orange-color);
-    background-image: -webkit-linear-gradient(45deg, var(--orange-color) 50%, transparent 50%);
-    background-image: linear-gradient(45deg, var(--orange-color) 50%, transparent 50%);
+.red-button {
+    background-image: url("assets/images/ui/red_button01.png");
 }
 
-.btn-red {
-    border-color: var(--red-color);
-    background-image: -webkit-linear-gradient(45deg, var(--red-color) 50%, transparent 50%);
-    background-image: linear-gradient(45deg, var(--red-color) 50%, transparent 50%);
+.red-button:active {
+    background-image: url("assets/images/ui/red_button02.png");
 }
 
 .blurred-bg {
@@ -208,12 +230,6 @@
     width: 100%;
     height: 100%;
     background: rgb(118 135 150 / 65%);
-}
-
-#leaveShopButton {
-    position: absolute;
-    left: 0;
-    top: -10px;
 }
 
 #wave-starting-text {
@@ -229,18 +245,17 @@
     pointer-events: none;
 }
 
-#game-wave-finished-container {
-    display: none;
-    /* flex */
+#game-buttons-container {
+    display: flex;
     justify-content: space-between;
+    margin-top: 24px;
 }
 
 #in-game-container {
-    top: 30px;
-    display: none;
-    /* flex */
+    display: flex;
     font-size: 2em;
     justify-content: space-between;
+    top: 32px;
 }
 
 .add-money-value-positive {
@@ -262,16 +277,24 @@
     opacity: 0;
 }
 
-#goToShopButton {
-    margin-top: -8px;
-}
-
 .margin-left {
-    margin-left: 20vh;
+    margin-left: 25vh;
 }
 
 .margin-right {
-    margin-right: 30vh;
+    margin-right: 25vh;
+}
+
+.margin-right-16px {
+    margin-right: 16px;
+}
+
+.margin-left-16px {
+    margin-left: 16px;
+}
+
+.game-value {
+    color: white;
 }
 
 .add-value {

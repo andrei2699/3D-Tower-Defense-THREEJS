@@ -4,8 +4,9 @@ class MainMenuScene extends Scene {
 
         this.mainMenu = document.getElementById("main-menu-container");
 
-        var orbitControls = new OrbitControls(this.camera, document.getElementById('app'));
-        orbitControls.mouseMovementPan({ clientX: -window.innerWidth / 8, clientY: -window.innerHeight / 4 })
+        this.orbitControls = new OrbitControls(this.camera, document.getElementById('app'));
+        this.orbitControls.mouseMovementPan({ clientX: -window.innerWidth / 8, clientY: -window.innerHeight / 4 })
+        this.orbitControls.enabled = false;
 
         document.getElementById("playButton").addEventListener("click", (event) => {
             gameScene.setMap('assets/levels/level1.json')

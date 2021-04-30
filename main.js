@@ -21,7 +21,7 @@ window.onblur = function () {
 
 const GridSize = 1;
 var soundEffectsVolume = 1;
-var isPlayingMusic = true;
+var isPlayingMusic = false;
 
 var allTurretData = [];
 var allEnemiesData = [];
@@ -68,7 +68,7 @@ audioLoader.load('assets/sounds/music/Upbeat Forever.mp3', function (buffer) {
     musicSound.setBuffer(buffer);
     musicSound.setLoop(true);
     musicSound.setVolume(0.5);
-    musicSound.play();
+    // musicSound.play();
 });
 
 

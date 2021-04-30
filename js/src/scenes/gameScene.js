@@ -12,7 +12,8 @@ class GameScene extends Scene {
         this.gameIsOver = false;
         this.shopPanelVisibility = true;
 
-        document.getElementById("nextWaveButton").addEventListener("click", (event) => {
+        this.nextWaveButton = document.getElementById("nextWaveButton");
+        this.nextWaveButton.addEventListener("click", (event) => {
             this.timeoutCount = 1;
             this.setWaveFinishedPanelVisibility(false);
             this.startTimeout();
@@ -24,7 +25,7 @@ class GameScene extends Scene {
             }
         })
 
-        this.waveFinishedPanel = document.getElementById("game-wave-finished-container");
+        this.waveFinishedPanel = document.getElementById("game-buttons-container");
         this.inGamePanel = document.getElementById("in-game-container");
         this.moneyText = document.getElementById("money-value");
         this.addMoneyText = document.getElementById("add-money-value");
@@ -305,10 +306,10 @@ class GameScene extends Scene {
 
     setWaveFinishedPanelVisibility(visible) {
         if (this.gameIsOver) {
-            this.waveFinishedPanel.style.display = "none";
+            this.nextWaveButton.style.display = "none";
 
         } else {
-            this.waveFinishedPanel.style.display = visible ? "flex" : "none";
+            this.nextWaveButton.style.display = visible ? "flex" : "none";
 
         }
     }

@@ -16,58 +16,64 @@
     <div id="wave-starting-text"></div>
     <div id="game-shop-title-container" class="game-menu">
         <div id="game-shop-title">Game Shop</div>
-        <button class="btn btn-style btn-red" id="leaveShopButton">
+        <button class="gamebutton red-button noselect" id="leaveShopButton">
             LEAVE
         </button>
     </div>
 
     <div id="main-menu-container" class="game-menu">
+        <div class="gametitle">Tower Defense</div>
         <div class="blurred-bg"></div>
-        <button class="btn btn-style btn-green" id="playButton">
-            PLAY
-        </button>
-        <button class="btn btn-style btn-yellow" id="tutorialButton">
-            TUTORIAL
-        </button>
+        <div class="grey-panel">
+            <div class="gamebutton green-button noselect" id="playButton">
+                PLAY
+            </div>
+            <div class="gamebutton yellow-button noselect" id="tutorialButton">
+                TUTORIAL
+            </div>
+        </div>
     </div>
 
-    <div id="game-wave-finished-container" class="game-menu">
-        <div></div>
-        <button class="btn btn-style btn-blue" id="nextWaveButton">
-            START WAVE
-        </button>
-    </div>
-    <div id="in-game-container" class="game-menu">
-        <button class="btn btn-style btn-orange" id="goToShopButton">
+    <div id="game-buttons-container" class="game-menu">
+        <div class="gamebutton yellow-button noselect margin-left-16px" id="goToShopButton">
             SHOP
-        </button>
-        <div>
+        </div>
+        <div></div>
+
+        <div class="gamebutton blue-button noselect margin-right-16px" id="nextWaveButton">
+            START WAVE
+        </div>
+    </div>
+
+    <div id="in-game-container" class="game-menu">
+        <div class="margin-left">
             <span>Lives: </span>
-            <span id="lives-value">3</span>
+            <span class="game-value" id="lives-value">3</span>
             <div id="remove-lives-value"></div>
         </div>
 
         <div>
             <span>Money: </span>
-            <span id="money-value">100</span>
+            <span class="game-value" id="money-value">100</span>
             <div id="add-money-value"></div>
         </div>
 
         <div>
             <span>Wave: </span>
-            <span id="wave-value"></span>
+            <span class="game-value" id="wave-value"></span>
         </div>
 
         <div class="margin-right">
             <span>Enemies Left: </span>
-            <span id="ememies-left-value"></span>
+            <span class="game-value" id="ememies-left-value"></span>
         </div>
     </div>
 
+
     <div id="game-main-container" class="game-menu">
-        <button class="btn btn-style btn-green" id="resumeButton">
+        <div class="gamebutton green-button noselect" id="resumeButton">
             RESUME
-        </button>
+        </div>
         <div class="volume-div">
             <div>Game Effects Volume</div>
             <img class="volume-img" src="assets/images/volume_up.png" id="effectsVolume">
@@ -76,9 +82,9 @@
             <div>Game Music Volume</div>
             <img class="volume-img" src="assets/images/volume_up.png" id="musicVolume">
         </div>
-        <button class="btn btn-style btn-red" id="toMainMenuButton">
+        <div class="gamebutton red-button noselect" id="toMainMenuButton">
             TO MAIN MENU
-        </button>
+        </div>
     </div>
 
     <div id="turret-details-container" class="game-menu">

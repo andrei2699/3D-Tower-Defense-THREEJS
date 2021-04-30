@@ -1,3 +1,5 @@
-https://sketchfab.com/MrBaby
-https://kenney.nl/assets/nature-kit
-Youtube Audio Library
+https://sketchfab.com/MrBaby -> Enemy
+https://kenney.nl/assets/nature-kit -> Foliage
+https://kenney.nl/assets/ui-pack -> UI
+https://freesound.org/ -> Sound Effects
+Youtube Audio Library -> Music

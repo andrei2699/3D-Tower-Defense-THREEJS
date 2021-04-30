@@ -43,26 +43,78 @@ class TestScene extends Scene {
         this.gameShopTitle.style.display = "none";
     }
 
+    update(deltatime) {
+        super.update(deltatime)
+
+        if (this.cube) {
+            this.elapsedTime += deltatime * 0.5;
+            this.cube.material.uniforms.time.value = this.elapsedTime;
+        }
+    }
+
     loadModels() {
+        var uniforms = {
+            color: { type: 'vec3', value: new THREE.Color(0xeb0909) },
+            opacity: { type: 'float', value: 0.5 },
+            time: { type: 'float', value: 0 },
+        }
 
-        this.enemy = new Enemy(allEnemiesData[0], [], this);
-        this.add(this.enemy)
-        this.addToBeBeUpdated(this.enemy.healthbar);
-        // this.enemy.die();
-        setTimeout(() => {
-            this.enemy.die();
-        }, 1000);
+        this.elapsedTime = 0;
 
-        // for (let i = 0; i < allTurretData.length * 2; i++) {
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            fragmentShader: _fragmentShader(),
+            vertexShader: _vertexShader(),
+        });
 
-        //     const geometry = new THREE.BoxGeometry();
-        //     const material = new THREE.MeshLambertMaterial({ color: 0x83aafb });
-        //     const cube = new THREE.Mesh(geometry, material);
-        //     cube.position.set(i * GridSize, -0.5, 0);
-        //     cube.scale.set(GridSize, 1, GridSize);
+        material.transparent = true;
+        material.side = THREE.DoubleSide;
+        this.cube = new THREE.Mesh(geometry, material);
+        this.cube.receiveShadow = true;
+        this.addToScene(this.cube);
 
-        //     this.addToScene(cube);
-        // }
+        function _vertexShader() {
+            return `
+                varying vec2 vUv; 
+                varying vec3 vPosition; 
+    
+                void main() 
+                {
+                    vPosition = position;
+                    vUv = uv; 
+    
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); 
+                }
+            `
+        }
+
+        function _fragmentShader() {
+            return `
+                uniform vec3 color;
+                uniform float opacity;
+                uniform float time;
+    
+                varying vec2 vUv;
+                varying vec3 vPosition;
+        
+                void main() 
+                {
+                    if (vPosition.y > 0.3 || vPosition.y < -0.3){
+                        discard;
+                    }
+
+                    float fracTime = fract(time);                    
+
+                    vec3 white = vec3(1.0, 1.0, 1.0);
+
+                    float mask = fract((vUv.y - time ) * 4.0);
+                    vec3 outColor = color * mask;
+
+                    gl_FragColor = vec4(outColor, opacity * mask);
+                }
+            `
+        }
     }
 
     removeEnemy() {

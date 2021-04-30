@@ -49,7 +49,7 @@ class GameScene extends Scene {
             this.setGameMenuVisibility(false);
         });
         document.getElementById("toMainMenuButton").addEventListener("click", (event) => {
-
+            changeScene(mainMenuScene);
         });
 
         var effectsImageButton = document.getElementById("effectsVolume");
@@ -257,11 +257,20 @@ class GameScene extends Scene {
                 dirLight.shadow.camera.far = 50;
                 me.addToScene(dirLight);
 
+
+                var startPos = waypoints[0];
+                var endPos = waypoints[waypoints.length - 1];
+                startPos = { x: startPos.x, y: 0.75, z: startPos.y };
+                endPos = { x: endPos.x, y: 0.75, z: endPos.y };
+
+                me.add(new EndPointCube(startPos, startPointColor, 1))
+                me.add(new EndPointCube(endPos, endPointColor, -1))
+
                 // const helper = new THREE.CameraHelper(dirLight.shadow.camera);
                 // this.addToScene(helper);
 
-                me.updateEnemiesLeft()
-                me.updateWave(0)
+                me.updateEnemiesLeft();
+                me.updateWave(0);
             },
             undefined,
             function (err) {
@@ -286,6 +295,7 @@ class GameScene extends Scene {
         this.orbitControls.enabled = false;
         this.inGamePanel.style.display = "none";
         this.setWaveFinishedPanelVisibility(false);
+        this.setGameMenuVisibility(false);
     }
 
     setGameMenuVisibility(visible) {

@@ -1,3 +1,6 @@
+const startPointColor = 0x34c92c;
+const endPointColor = 0xeb0909;
+
 function loadMap(mapData, scene, gridSize) {
 
     if (!gridSize) {
@@ -18,10 +21,10 @@ function loadMap(mapData, scene, gridSize) {
             else if (mapData.map[x][y] > 0) {
 
                 if (mapData.map[x][y] == 2) {
-                    color = 0x34c92c;
+                    color = startPointColor;
                 }
                 else if (mapData.map[x][y] == 3) {
-                    color = 0xeb0909;
+                    color = endPointColor;
                 } else {
                     color = 0x695b17;
                 }

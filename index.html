@@ -24,7 +24,7 @@
     <div id="main-menu-container" class="game-menu">
         <div class="gametitle">Tower Defense</div>
         <div class="blurred-bg"></div>
-        <div class="grey-panel">
+        <div class="main-menu-panel">
             <div class="gamebutton green-button noselect" id="playButton">
                 PLAY
             </div>
@@ -71,48 +71,49 @@
 
 
     <div id="game-main-container" class="game-menu">
+        <div class="gametitle">Game Paused</div>
+
         <div class="gamebutton green-button noselect" id="resumeButton">
             RESUME
         </div>
-        <div class="volume-div">
-            <div>Game Effects Volume</div>
-            <img class="volume-img" src="assets/images/volume_up.png" id="effectsVolume">
-        </div>
-        <div class="volume-div">
-            <div>Game Music Volume</div>
-            <img class="volume-img" src="assets/images/volume_up.png" id="musicVolume">
+        <div class="game-menu-volume-panel">
+            <div class="volume-div">
+                <div>Game Effects Volume</div>
+                <img class="volume-img" src="assets/images/volume_up.png" id="effectsVolume">
+            </div>
+            <div class="volume-div">
+                <div>Game Music Volume</div>
+                <img class="volume-img" src="assets/images/volume_up.png" id="musicVolume">
+            </div>
         </div>
         <div class="gamebutton red-button noselect" id="toMainMenuButton">
-            TO MAIN MENU
+            MAIN MENU
         </div>
     </div>
 
     <div id="turret-details-container" class="game-menu">
         <div>
             <span>Name: </span>
-            <span id="turret-name-value"></span>
+            <span class="game-value" id="turret-name-value"></span>
         </div>
 
         <div>
             <span>Reach Distance: </span>
-            <span id="turret-reach-distance-value"></span>
+            <span class="game-value" id="turret-reach-distance-value"></span>
         </div>
 
         <div>
             <span>Firing Speed: </span>
-            <span id="turret-firing-speed-value"></span>
+            <span class="game-value" id="turret-firing-speed-value"></span>
         </div>
 
         <div>
             <span>Damage: </span>
-            <span id="turret-damage-value"></span>
+            <span class="game-value" id="turret-damage-value"></span>
         </div>
     </div>
 
     <div id="shop-container" class="game-menu">
-        <h3>
-            Shop
-        </h3>
         <div id="shop-content-container">
         </div>
     </div>

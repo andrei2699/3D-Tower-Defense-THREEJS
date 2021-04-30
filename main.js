@@ -21,7 +21,7 @@ window.onblur = function () {
 
 const GridSize = 1;
 var soundEffectsVolume = 1;
-var isPlayingMusic = false;
+var isPlayingMusic = true;
 
 var allTurretData = [];
 var allEnemiesData = [];
@@ -41,10 +41,10 @@ var mainMenuScene = new MainMenuScene(createScene(), createCamera());
 mainMenuScene.addToScene(createLight());
 
 var currentScene;
-changeScene(gameScene);
-gameScene.setMap('assets/levels/level1.json')
+// changeScene(gameScene);
+// gameScene.setMap('assets/levels/level1.json')
 
-// changeScene(mainMenuScene);
+changeScene(mainMenuScene);
 // changeScene(testScene);
 
 // const interactionManager = new InteractionManager(
@@ -68,7 +68,7 @@ audioLoader.load('assets/sounds/music/Upbeat Forever.mp3', function (buffer) {
     musicSound.setBuffer(buffer);
     musicSound.setLoop(true);
     musicSound.setVolume(0.5);
-    // musicSound.play();
+    musicSound.play();
 });
 
 

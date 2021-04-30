@@ -284,6 +284,7 @@ class GameScene extends Scene {
     sceneEnter() {
         this.orbitControls.enabled = true;
         this.inGamePanel.style.display = "flex";
+        this.waveFinishedPanel.style.display = "flex";
 
         if (!this.waveManager.isWavePlaying) {
             this.setWaveFinishedPanelVisibility(true);
@@ -291,6 +292,7 @@ class GameScene extends Scene {
     }
 
     sceneLeave() {
+        this.waveFinishedPanel.style.display = "none";
         this.removeLivesText.classList.remove("add-value");
         this.addMoneyText.classList.remove("add-value");
         this.orbitControls.enabled = false;
@@ -537,11 +539,11 @@ class GameScene extends Scene {
 
             if (turretData[i].price > this.money) {
 
-                button.disabled = true;
+                // button.disabled = true;
                 notEnoughMoneyDiv.style.display = "block";
             }
             else {
-                button.disabled = false;
+                // button.disabled = false;
                 notEnoughMoneyDiv.style.display = "none";
             }
         }
@@ -555,21 +557,25 @@ class GameScene extends Scene {
             var contentItemDiv = document.createElement("div")
             contentItemDiv.classList.add("shop-content-item");
 
-            contentItemDiv.appendChild(CreatePropertyInShopMenu("Name", data.name));
-            contentItemDiv.appendChild(CreatePropertyInShopMenu("Damage", data.bulletData.damage));
-            contentItemDiv.appendChild(CreatePropertyInShopMenu("Firing Speed", data.firingSpeed));
-            contentItemDiv.appendChild(CreatePropertyInShopMenu("Reach Distance", data.reachDistance));
-            contentItemDiv.appendChild(CreatePropertyInShopMenu("Price", data.price));
+            var propertiesDiv = document.createElement("div");
+            propertiesDiv.classList.add("turret-properties-panel");
+            contentItemDiv.append(propertiesDiv)
+
+            propertiesDiv.appendChild(CreatePropertyInShopMenu("Name", data.name));
+            propertiesDiv.appendChild(CreatePropertyInShopMenu("Damage", data.bulletData.damage));
+            propertiesDiv.appendChild(CreatePropertyInShopMenu("Firing Speed", data.firingSpeed));
+            propertiesDiv.appendChild(CreatePropertyInShopMenu("Reach Distance", data.reachDistance));
+            propertiesDiv.appendChild(CreatePropertyInShopMenu("Price", data.price));
 
             var contentItemImg = document.createElement("img");
             contentItemImg.classList.add("shop-content-item-img");
             contentItemImg.src = data.imagePath;
             contentItemDiv.appendChild(contentItemImg);
 
-            var contentItemButton = document.createElement("button");
-            contentItemButton.classList.add("btn");
-            contentItemButton.classList.add("btn-style");
-            contentItemButton.classList.add("btn-blue");
+            var contentItemButton = document.createElement("div");
+            contentItemButton.classList.add("gamebutton");
+            contentItemButton.classList.add("blue-button");
+            contentItemButton.classList.add("noselect");
             contentItemButton.innerHTML = "BUY"
             contentItemButton.onclick = (event) => {
 
@@ -597,6 +603,7 @@ class GameScene extends Scene {
             nameSpan.innerHTML = name + ": ";
 
             var valueSpan = document.createElement("span");
+            valueSpan.classList.add("game-value")
             valueSpan.innerHTML = value;
 
             div.appendChild(nameSpan);

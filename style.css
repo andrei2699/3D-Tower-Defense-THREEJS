@@ -41,11 +41,11 @@ body {
     flex-direction: column;
     font-weight: bold;
     font-size: 1.2em;
-    background: bisque;
+    background: #59a5b1;
     width: auto;
     padding: 16px;
-    right: 0;
-    top: 16%;
+    right: 4px;
+    top: 12%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 25px;
 }
@@ -58,22 +58,23 @@ body {
     display: none;
     justify-content: start;
     overflow-y: auto;
-    height: 60vh;
+    height: 80%;
     width: auto;
     left: 4px;
     top: 12%;
-    padding: 16px;
     flex-direction: column;
 }
 
 .shop-content-item {
     display: flex;
     flex-direction: column;
-    background: honeydew;
     margin-top: 16px;
-    padding: 16px;
+    padding: 24px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: #FFCC00;
     border-radius: 25px;
+    justify-content: center;
+    align-items: center;
 }
 
 .shop-content-item>* {
@@ -100,7 +101,47 @@ body {
     display: none;
     /* flex */
     flex-direction: column;
-    background: #b9b3b340;
+    background: #a7a7a7d1;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+#game-main-container>* {
+    margin: 16px;
+}
+
+.main-menu-panel {
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    border-radius: 25px;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: #cecdcd;
+    z-index: 1;
+}
+
+.main-menu-panel>* {
+    margin: 16px;
+}
+
+.gamebutton {
+    background-repeat: no-repeat;
+    z-index: 5;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    height: 50px;
+    width: 190px;
+    text-align: center;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
 }
 
 .volume-div {
@@ -111,11 +152,22 @@ body {
     padding: 10px;
 }
 
+.game-menu-volume-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    border-radius: 25px;
+    background: #dadada;
+    padding: 16px;
+}
+
 .volume-img {
     margin-left: 16px;
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
     border-radius: 25px;
-    background: burlywood;
+    background: #f7dbb7;
     cursor: pointer;
 }
 
@@ -138,6 +190,7 @@ body {
     font-size: 3em;
     z-index: 1;
     margin-bottom: 10%;
+    color: white;
 }
 
 #main-menu-container {
@@ -146,51 +199,6 @@ body {
     /* flex */
     align-items: center;
     flex-direction: column;
-}
-
-.grey-panel {
-    background-image: url(assets/images/ui/grey_panel.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    z-index: 1;
-    padding: 8px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-}
-
-.yellow-panel {
-    background-image: url(assets/images/ui/yellow_panel.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    z-index: 1;
-    padding: 8px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-}
-
-.grey-panel>* {
-    margin: 16px;
-}
-
-.gamebutton {
-    background-repeat: no-repeat;
-    z-index: 5;
-    text-decoration: none;
-    text-transform: uppercase;
-    cursor: pointer;
-    height: 50px;
-    width: 190px;
-    text-align: center;
-    font-weight: 700;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5em;
 }
 
 .green-button {
@@ -328,6 +336,11 @@ body {
     animation-duration: 0.5s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
+}
+
+.turret-properties-panel {
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes hideShopPanelAnimation {

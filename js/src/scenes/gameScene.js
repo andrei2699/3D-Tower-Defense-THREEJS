@@ -45,6 +45,8 @@ class GameScene extends Scene {
         this.shopPanel = document.getElementById("shop-container");
         this.shopContentPanel = document.getElementById("shop-content-container");
 
+        this.controlsFreezedText = document.getElementById("control-freezed-text");
+
         this.gameMainPanel = document.getElementById("game-main-container");
         document.getElementById("resumeButton").addEventListener("click", (event) => {
             this.setGameMenuVisibility(false);
@@ -160,6 +162,17 @@ class GameScene extends Scene {
                         this._toggleShopPanel();
                     }
                     this.setGameMenuVisibility(!this.gameIsPaused);
+                } break;
+
+                case "KeyS": {
+                    if (!this.gameIsOver) {
+                        this._toggleShopPanel();
+                    }
+                } break;
+
+                case "KeyF": {
+                    this.orbitControls.enabled = !this.orbitControls.enabled;
+                    this.controlsFreezedText.style.display = !this.orbitControls.enabled ? "flex" : "none";
                 } break;
             }
         });

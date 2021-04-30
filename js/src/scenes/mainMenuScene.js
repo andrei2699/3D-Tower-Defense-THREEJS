@@ -3,6 +3,8 @@ class MainMenuScene extends Scene {
         super(scene, camera);
 
         this.mainMenu = document.getElementById("main-menu-container");
+        this.tutorialPanel = document.getElementById("tutorial-panel");
+        this.tutorialPanelVisible = false;
 
         this.orbitControls = new OrbitControls(this.camera, document.getElementById('app'));
         this.orbitControls.mouseMovementPan({ clientX: -window.innerWidth / 8, clientY: -window.innerHeight / 4 })
@@ -14,7 +16,7 @@ class MainMenuScene extends Scene {
         })
 
         document.getElementById("tutorialButton").addEventListener("click", (event) => {
-            console.log("Tutorial");
+            this.setTutorialPanelVisibility(!this.tutorialPanelVisible);
         })
 
         var me = this;
@@ -32,13 +34,21 @@ class MainMenuScene extends Scene {
                 console.error(err)
             }
         );
+        this.setTutorialPanelVisibility(false);
     }
 
     sceneEnter() {
         this.mainMenu.style.display = "flex";
+        this.setTutorialPanelVisibility(false);
     }
 
     sceneLeave() {
         this.mainMenu.style.display = "none";
+        this.setTutorialPanelVisibility(false);
+    }
+
+    setTutorialPanelVisibility(visible) {
+        this.tutorialPanelVisible = visible;
+        this.tutorialPanel.style.display = visible ? "flex" : "none";
     }
 }

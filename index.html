@@ -14,13 +14,6 @@
 
 <body>
     <div id="wave-starting-text"></div>
-    <div id="game-shop-title-container" class="game-menu">
-        <div id="game-shop-title">Game Shop</div>
-        <button class="gamebutton red-button noselect" id="leaveShopButton">
-            LEAVE
-        </button>
-    </div>
-
     <div id="main-menu-container" class="game-menu">
         <div class="gametitle">Tower Defense</div>
         <div class="blurred-bg"></div>
@@ -91,6 +84,38 @@
         </div>
     </div>
 
+    <div id="control-freezed-text">Controls Freezed</div>
+
+    <div class="tutorial-div" id="tutorial-panel">
+        <div class="tutorial-title">Tutorial</div>
+
+        <div>
+            <span>Rotate Around</span>
+            <span class="game-value">Right Mouse Button</span>
+        </div>
+
+        <div>
+            <span>Move Around</span>
+            <span class="game-value">Left Mouse Button</span>
+        </div>
+
+        <div>
+            <span>Zoom Around</span>
+            <span class="game-value">Middle Mouse Button</span>
+        </div>
+
+        <div>
+            <span>Open Shop</span>
+            <span class="game-value">Key: S</span>
+        </div>
+
+        <div>
+            <span>Lock Controls</span>
+            <span class="game-value">Key: F</span>
+        </div>
+    </div>
+
+
     <div id="turret-details-container" class="game-menu">
         <div>
             <span>Name: </span>
@@ -131,7 +156,6 @@
     <script src="js/src/scenes/scene.js"></script>
     <script src="js/src/scenes/mainMenuScene.js"></script>
     <script src="js/src/scenes/gameScene.js"></script>
-    <script src="js/src/scenes/testScene.js "></script>
 
     <script src="js/src/mapLoader.js"></script>
     <script src="js/src/entities/data/entitiesData.js"></script>

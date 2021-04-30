@@ -13,27 +13,20 @@ body {
     justify-content: center;
 }
 
-/* #game-shop-title-container {
-    top: 10px;
-    display: none; */
-
-/* flex */
-
-/* } */
-
-/* #game-shop-title {
-    width: 30%;
-    text-align: center;
-    z-index: 100;
-    display: block;
-    font-size: 4em;
-    font-family: fantasy;
-    background: #d4bda2;
-    padding: 16px;
-    text-shadow: 2px 2px #6b5e5e;
+#control-freezed-text {
+    display: none;
+    /* flex */
+    position: absolute;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #59a5b1;
+    right: 4px;
+    top: 10%;
+    padding: 8px;
+    background: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 25px;
-} */
+}
 
 #turret-details-container {
     display: none;
@@ -45,7 +38,7 @@ body {
     width: auto;
     padding: 16px;
     right: 4px;
-    top: 12%;
+    top: 14%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 25px;
 }
@@ -61,7 +54,7 @@ body {
     height: 80%;
     width: auto;
     left: 4px;
-    top: 12%;
+    top: 14%;
     flex-direction: column;
 }
 
@@ -359,4 +352,24 @@ body {
     100% {
         transform: translateX(-105%);
     }
+}
+
+.tutorial-div {
+    position: absolute;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    border-radius: 25px;
+    padding: 16px;
+    bottom: 16px;
+    left: 16px;
+    background: #8d92b3;
+    flex-direction: column;
+}
+
+.tutorial-div>* {
+    padding: 8px;
+}
+
+.tutorial-title {
+    font-size: 1.4em;
+    color: white;
 }

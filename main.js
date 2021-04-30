@@ -35,8 +35,6 @@ const renderer = createRenderer();
 
 var gameScene = new GameScene(createScene(), createCamera());
 
-var testScene = new TestScene(CreateMenuScene(), createCamera());
-
 var mainMenuScene = new MainMenuScene(createScene(), createCamera());
 mainMenuScene.addToScene(createLight());
 
@@ -45,7 +43,6 @@ var currentScene;
 // gameScene.setMap('assets/levels/level1.json')
 
 changeScene(mainMenuScene);
-// changeScene(testScene);
 
 // const interactionManager = new InteractionManager(
 //     renderer,
@@ -59,7 +56,6 @@ changeScene(mainMenuScene);
 
 loadModels(() => {
     console.log("objects loaded")
-    testScene.loadModels();
 });
 
 audioLoader.load('assets/sounds/music/Upbeat Forever.mp3', function (buffer) {
@@ -68,7 +64,9 @@ audioLoader.load('assets/sounds/music/Upbeat Forever.mp3', function (buffer) {
     musicSound.setBuffer(buffer);
     musicSound.setLoop(true);
     musicSound.setVolume(0.5);
-    musicSound.play();
+    if (isFocused) {
+        musicSound.play();
+    }
 });
 
 
@@ -128,6 +126,9 @@ function toggleMusicPlay() {
 }
 
 function setMusicPlaying(playing) {
+    if (!musicSound) {
+        return
+    }
     isPlayingMusic = playing;
     if (isPlayingMusic) {
         musicSound.play();
@@ -221,12 +222,6 @@ function createRenderer() {
 function createScene() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xA0A0A0);
-    return scene;
-}
-
-function CreateMenuScene() {
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xaaaaaa);
     return scene;
 }
 

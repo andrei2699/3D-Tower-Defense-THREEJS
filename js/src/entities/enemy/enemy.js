@@ -57,11 +57,31 @@ class Enemy extends AnimatedEntity {
                 }
             });
         }
-        this.elapsedTime = 1.0;
+        this._setDyingShader();
+        this.elapsedTime = 0.0;
+        this.spawned = true;
     }
 
     update(deltaTime) {
         super.update(deltaTime);
+
+        if (this.spawned) {
+            this.elapsedTime += deltaTime * 2.0;
+            var me = this;
+
+            this.mesh.traverse(function (object) {
+                if (object.isMesh && object.material.uniforms.time) {
+                    object.material.uniforms.time.value = me.elapsedTime;
+                }
+            });
+
+            if (this.elapsedTime >= 1.0) {
+                this.elapsedTime = 1.0
+                this.spawned = false;
+            }
+
+            return;
+        }
 
         if (this.isDead) {
             this.elapsedTime -= deltaTime * 2.0;

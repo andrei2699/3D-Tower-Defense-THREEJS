@@ -21,7 +21,7 @@ window.onblur = function () {
 
 const GridSize = 1;
 var soundEffectsVolume = 1;
-var isPlayingMusic = false;
+var isPlayingMusic = true;
 
 var allTurretData = [];
 var allEnemiesData = [];
@@ -67,8 +67,8 @@ audioLoader.load('assets/sounds/music/Upbeat Forever.mp3', function (buffer) {
     musicSound = new THREE.Audio(audioListener);
     musicSound.setBuffer(buffer);
     musicSound.setLoop(true);
-    musicSound.setVolume(1);
-    // musicSound.play();
+    musicSound.setVolume(0.5);
+    musicSound.play();
 });
 
 
@@ -141,7 +141,7 @@ function playSoundEffect(soundBuffer, loop = false) {
         var sound = new THREE.Audio(audioListener);
         sound.setBuffer(soundBuffer);
         sound.setLoop(loop);
-        sound.setVolume(soundEffectsVolume);
+        sound.setVolume(soundEffectsVolume * 0.5);
         sound.play();
     }
 }

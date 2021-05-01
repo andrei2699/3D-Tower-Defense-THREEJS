@@ -295,6 +295,7 @@ class GameScene extends Scene {
     }
 
     sceneEnter() {
+        this.waveStartingText.innerHTML = "";
         this.orbitControls.enabled = true;
         this.inGamePanel.style.display = "flex";
         this.waveFinishedPanel.style.display = "flex";
@@ -305,6 +306,7 @@ class GameScene extends Scene {
     }
 
     sceneLeave() {
+        this.waveStartingText.innerHTML = "";
         this.waveFinishedPanel.style.display = "none";
         this.removeLivesText.classList.remove("add-value");
         this.addMoneyText.classList.remove("add-value");
@@ -312,6 +314,7 @@ class GameScene extends Scene {
         this.inGamePanel.style.display = "none";
         this.setWaveFinishedPanelVisibility(false);
         this.setGameMenuVisibility(false);
+        this.removeAll();
     }
 
     setGameMenuVisibility(visible) {
@@ -548,15 +551,15 @@ class GameScene extends Scene {
 
 
             var notEnoughMoneyDiv = shopItemDiv.getElementsByClassName("shop-content-item-not-enough-money")[0];
-            var button = shopItemDiv.getElementsByTagName("button")[0];
+            var button = shopItemDiv.getElementsByClassName("gamebutton")[0];
 
             if (turretData[i].price > this.money) {
 
-                // button.disabled = true;
+                button.style.display = "none";
                 notEnoughMoneyDiv.style.display = "block";
             }
             else {
-                // button.disabled = false;
+                button.style.display = "flex";
                 notEnoughMoneyDiv.style.display = "none";
             }
         }

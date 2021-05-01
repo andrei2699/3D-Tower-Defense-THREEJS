@@ -3,17 +3,15 @@ class MainMenuScene extends Scene {
         super(scene, camera);
 
         this.mainMenu = document.getElementById("main-menu-container");
+        this.levelsPanel = document.getElementById("levels-panel");
+        this._createLevelsPanel();
+
         this.tutorialPanel = document.getElementById("tutorial-panel");
         this.tutorialPanelVisible = false;
 
         this.orbitControls = new OrbitControls(this.camera, document.getElementById('app'));
         this.orbitControls.mouseMovementPan({ clientX: -window.innerWidth / 8, clientY: -window.innerHeight / 4 })
         this.orbitControls.enabled = false;
-
-        document.getElementById("playButton").addEventListener("click", (event) => {
-            gameScene.setMap('assets/levels/level1.json')
-            changeScene(gameScene);
-        })
 
         document.getElementById("tutorialButton").addEventListener("click", (event) => {
             this.setTutorialPanelVisibility(!this.tutorialPanelVisible);
@@ -50,5 +48,23 @@ class MainMenuScene extends Scene {
     setTutorialPanelVisibility(visible) {
         this.tutorialPanelVisible = visible;
         this.tutorialPanel.style.display = visible ? "flex" : "none";
+    }
+
+    _createLevelsPanel() {
+        var levelCount = 4;
+
+        for (let i = 1; i <= levelCount; i++) {
+            var levelDiv = document.createElement("div")
+            levelDiv.classList.add("level-panel-item");
+            levelDiv.classList.add("noselect");
+
+            levelDiv.innerHTML = "Level " + i;
+            levelDiv.onclick = (event) => {
+                gameScene.setMap(`assets/levels/level${i}.json`)
+                changeScene(gameScene);
+            }
+
+            this.levelsPanel.appendChild(levelDiv);
+        }
     }
 }

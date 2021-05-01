@@ -58,6 +58,11 @@ class Scene {
         this.scene.remove(gameobject.mesh);
     }
 
+    removeAll() {
+        this.scene.children = [];
+        this.gameobjects = [];
+    }
+
     addEventListener(type, handler) {
         this.eventListeners[type] = handler;
     }

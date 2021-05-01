@@ -61,10 +61,12 @@ body {
 .shop-content-item {
     display: flex;
     flex-direction: column;
-    margin-top: 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 8px;
     padding: 24px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background: #FFCC00;
+    background: #58b5b5;
     border-radius: 25px;
     justify-content: center;
     align-items: center;
@@ -85,8 +87,13 @@ body {
 }
 
 .shop-content-item-img {
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 180px;
+    max-height: 180px;
+    background: #ffffff52;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 120px;
+    margin-top: 16px;
+    margin-bottom: 8px;
 }
 
 #game-main-container {
@@ -244,6 +251,13 @@ body {
     height: 100%;
     width: 100%;
     pointer-events: none;
+}
+
+#toMainMenuButtonGameFinishedContainer {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translateX(-50%);
 }
 
 #game-buttons-container {

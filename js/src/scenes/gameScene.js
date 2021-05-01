@@ -2,15 +2,6 @@ class GameScene extends Scene {
     constructor(scene, camera) {
         super(scene, camera);
         this.mouse = new THREE.Vector2();
-        this.selectedToBePlacedObject;
-        this.selectedTurret;
-        this.isHoveringValidSpot;
-
-        this.gameIsPaused = false;
-        this.timeoutCount = 0;
-        this.turretEnemyDeadEventHandlers = [];
-        this.gameIsOver = false;
-        this.shopPanelVisibility = true;
 
         this.nextWaveButton = document.getElementById("nextWaveButton");
         this.nextWaveButton.addEventListener("click", (event) => {
@@ -35,6 +26,11 @@ class GameScene extends Scene {
         this.removeLivesText = document.getElementById("remove-lives-value");
 
         this.waveStartingText = document.getElementById("wave-starting-text");
+        this.toMainMenuButtonGameFinishedContainer = document.getElementById("toMainMenuButtonGameFinishedContainer");
+        document.getElementById("toMainMenuButtonGameFinished").addEventListener("click", (event) => {
+            changeScene(mainMenuScene);
+        })
+        this.toMainMenuButtonGameFinishedContainer.style.display = 'none';
 
         this.turretDetailsPanel = document.getElementById("turret-details-container");
         this.turretDetailsNameText = document.getElementById("turret-name-value");
@@ -74,20 +70,7 @@ class GameScene extends Scene {
             }
         });
 
-        this.lives = 3;
-        this.money = 100;
-        this.moneyText.innerHTML = this.money;
-        this.waveCount = 0;
-        this.waveTotalEnemiesCount = 0;
-        this.waveRemainingEnemiesCount = 0;
-        this.allEnemies = [];
-
-        this._UpdateShopPanelItems();
-
         this.setWaveFinishedPanelVisibility(false);
-
-        // this.updateMoney(151);
-        this.updateWave(0);
 
         this.addToScene(new THREE.AmbientLight(0x404040, 0.2));// soft white light
 
@@ -173,7 +156,39 @@ class GameScene extends Scene {
             }
         });
 
+        this.ResetGame();
         this.sceneLeave();
+    }
+
+    ResetGame() {
+        this.toMainMenuButtonGameFinishedContainer.style.display = 'none';
+        this.selectedToBePlacedObject = undefined;
+        this.selectedTurret = undefined;
+        this.isHoveringValidSpot = false;
+
+        this.gameIsPaused = false;
+        this.timeoutCount = 0;
+        this.turretEnemyDeadEventHandlers = [];
+        this.gameIsOver = false;
+        this.shopPanelVisibility = true;
+
+        this.lives = 3;
+        this.money = 100;
+        this.moneyText.innerHTML = this.money;
+        this.waveTotalEnemiesCount = 0;
+        this.waveRemainingEnemiesCount = 0;
+        this.allEnemies = [];
+
+        this._UpdateShopPanelItems();
+
+        this.setWaveFinishedPanelVisibility(true);
+
+
+        this.orbitControls.enabled = true;
+        this.controlsFreezedText.style.display = !this.orbitControls.enabled ? "flex" : "none";
+
+        // this.updateMoney(151);
+        this.updateWave(0);
     }
 
     loadModels() {
@@ -285,6 +300,8 @@ class GameScene extends Scene {
                 // const helper = new THREE.CameraHelper(dirLight.shadow.camera);
                 // this.addToScene(helper);
 
+                me.ResetGame();
+
                 me.updateEnemiesLeft();
                 me.updateWave(0);
             },
@@ -297,6 +314,8 @@ class GameScene extends Scene {
     }
 
     sceneEnter() {
+        this.orbitControls.enabled = true;
+        this.controlsFreezedText.style.display = !this.orbitControls.enabled ? "flex" : "none";
         this.waveStartingText.innerHTML = "";
         this.orbitControls.enabled = true;
         this.inGamePanel.style.display = "flex";
@@ -305,6 +324,8 @@ class GameScene extends Scene {
     }
 
     sceneLeave() {
+        this.orbitControls.enabled = true;
+        this.controlsFreezedText.style.display = !this.orbitControls.enabled ? "flex" : "none";
         this.waveStartingText.innerHTML = "";
         this.waveFinishedPanel.style.display = "none";
         this.removeLivesText.classList.remove("add-value");
@@ -349,6 +370,9 @@ class GameScene extends Scene {
         } else {
             this.waveStartingText.innerHTML = "GAME OVER";
         }
+        setTimeout(() => {
+            this.toMainMenuButtonGameFinishedContainer.style.display = 'flex';
+        }, 1000);
 
         this.setWaveFinishedPanelVisibility(false);
         this.showTurretDetailsPanel(false, undefined);

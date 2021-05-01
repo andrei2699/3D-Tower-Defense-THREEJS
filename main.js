@@ -56,6 +56,7 @@ changeScene(mainMenuScene);
 
 loadModels(() => {
     console.log("objects loaded")
+    mainMenuScene.loadModels();
     gameScene.loadModels();
 });
 
@@ -139,6 +140,11 @@ function setMusicPlaying(playing) {
 }
 
 function playSoundEffect(soundBuffer, loop = false) {
+
+    if (currentScene == mainMenuScene) {
+        return;
+    }
+
     if (soundEffectsVolume > 0) {
         var sound = new THREE.Audio(audioListener);
         sound.setBuffer(soundBuffer);

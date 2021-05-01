@@ -56,6 +56,7 @@ changeScene(mainMenuScene);
 
 loadModels(() => {
     console.log("objects loaded")
+    gameScene.loadModels();
 });
 
 audioLoader.load('assets/sounds/music/Upbeat Forever.mp3', function (buffer) {

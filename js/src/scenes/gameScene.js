@@ -74,10 +74,9 @@ class GameScene extends Scene {
             }
         });
 
-        this._CreateShopPanel();
-
         this.lives = 3;
-        this.money = 30;
+        this.money = 100;
+        this.moneyText.innerHTML = this.money;
         this.waveCount = 0;
         this.waveTotalEnemiesCount = 0;
         this.waveRemainingEnemiesCount = 0;
@@ -86,9 +85,6 @@ class GameScene extends Scene {
         this._UpdateShopPanelItems();
 
         this.setWaveFinishedPanelVisibility(false);
-
-        this.waveManager = new WaveManager();
-        this.addToBeBeUpdated(this.waveManager);
 
         // this.updateMoney(151);
         this.updateWave(0);
@@ -180,6 +176,10 @@ class GameScene extends Scene {
         this.sceneLeave();
     }
 
+    loadModels() {
+        this._CreateShopPanel();
+    }
+
     update(deltaTime) {
         if (this.gameIsPaused) {
             return;
@@ -254,6 +254,8 @@ class GameScene extends Scene {
                 var waypoints = loadMap(map, me.scene, GridSize);
 
                 me.map = map.map;
+                me.waveManager = new WaveManager();
+                me.addToBeBeUpdated(me.waveManager);
                 me.waveManager.setData(me, waypoints, waveData);
                 me.waveCount = waveData.length;
 
@@ -299,10 +301,7 @@ class GameScene extends Scene {
         this.orbitControls.enabled = true;
         this.inGamePanel.style.display = "flex";
         this.waveFinishedPanel.style.display = "flex";
-
-        if (!this.waveManager.isWavePlaying) {
-            this.setWaveFinishedPanelVisibility(true);
-        }
+        this.setWaveFinishedPanelVisibility(true);
     }
 
     sceneLeave() {
@@ -553,7 +552,7 @@ class GameScene extends Scene {
             var notEnoughMoneyDiv = shopItemDiv.getElementsByClassName("shop-content-item-not-enough-money")[0];
             var button = shopItemDiv.getElementsByClassName("gamebutton")[0];
 
-            if (turretData[i].price > this.money) {
+            if (allTurretData[i].data.price > this.money) {
 
                 button.style.display = "none";
                 notEnoughMoneyDiv.style.display = "block";
@@ -567,8 +566,8 @@ class GameScene extends Scene {
 
     _CreateShopPanel() {
 
-        for (let i = 0; i < turretData.length; i++) {
-            const data = turretData[i];
+        for (let i = 0; i < allTurretData.length; i++) {
+            const data = allTurretData[i].data;
 
             var contentItemDiv = document.createElement("div")
             contentItemDiv.classList.add("shop-content-item");
@@ -594,7 +593,6 @@ class GameScene extends Scene {
             contentItemButton.classList.add("noselect");
             contentItemButton.innerHTML = "BUY"
             contentItemButton.onclick = (event) => {
-
                 if (!this.selectedToBePlacedObject || this.selectedToBePlacedObject.data != data) {
                     this.selectedToBePlacedObject = new Turret(allTurretData[i], this);
                     this.add(this.selectedToBePlacedObject);
@@ -609,6 +607,7 @@ class GameScene extends Scene {
             contentItemDiv.appendChild(contentItemNotEnoughMoney);
 
             this.shopContentPanel.appendChild(contentItemDiv);
+            this._UpdateShopPanelItems();
         }
 
         function CreatePropertyInShopMenu(name, value) {

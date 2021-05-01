@@ -17,13 +17,61 @@ const turretData = [
     {
         name: "2 Barrel Turret",
         assetPath: 'assets/models/turrets/BasicTurret.json',
-        imagePath: 'assets/images/img1.jpg',
+        imagePath: 'assets/images/turrets/BlackTurretPreview.png',
         reachDistance: 2.5,
         firingSpeed: 0.25,
         price: 10,
         bulletData: {
             damage: 1,
             speed: 20,
+            radius: 0.05,
+            color: 0xedd326
+        },
+        soundEffects: [
+            {
+                action: 'shoot',
+                name: 'turretShot2'
+            },
+            {
+                action: 'place',
+                name: 'turretPlace'
+            }
+        ]
+    },
+    {
+        name: "Burst Fire Turret",
+        assetPath: 'assets/models/turrets/RedBasicTurret.json',
+        imagePath: 'assets/images/turrets/RedTurretPreview.png',
+        reachDistance: 1.5,
+        firingSpeed: 0.15,
+        price: 50,
+        bulletData: {
+            damage: 0.1,
+            speed: 30,
+            radius: 0.05,
+            color: 0xedd326
+        },
+        soundEffects: [
+            {
+                action: 'shoot',
+                name: 'turretShot2'
+            },
+            {
+                action: 'place',
+                name: 'turretPlace'
+            }
+        ]
+    },
+    {
+        name: "Turret",
+        assetPath: 'assets/models/turrets/BlueBasicTurret.json',
+        imagePath: 'assets/images/turrets/BlueTurretPreview.png',
+        reachDistance: 1.5,
+        firingSpeed: 0.15,
+        price: 50,
+        bulletData: {
+            damage: 0.1,
+            speed: 30,
             radius: 0.05,
             color: 0xedd326
         },

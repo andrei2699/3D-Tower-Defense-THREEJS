@@ -1,6 +1,42 @@
 {
     "name": "Level 1",
     "type": "mountain",
+    "money": 100,
+    "waveData": [
+        {
+            "enemyCount": 2,
+            "enemyTypes": [
+                "medium"
+            ],
+            "spawnTime": 5,
+            "money": 60
+        },
+        {
+            "enemyCount": 5,
+            "enemyTypes": [
+                "fast"
+            ],
+            "spawnTime": 0.4,
+            "money": 20
+        },
+        {
+            "enemyCount": 3,
+            "enemyTypes": [
+                "basic"
+            ],
+            "spawnTime": 1,
+            "money": 20
+        },
+        {
+            "enemyCount": 4,
+            "enemyTypes": [
+                "basic",
+                "small"
+            ],
+            "spawnTime": 0.8,
+            "money": 20
+        }
+    ],
     "mapsize": 7,
     "map": [
         [

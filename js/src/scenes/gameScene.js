@@ -5,7 +5,7 @@ class GameScene extends Scene {
 
         this.nextWaveButton = document.getElementById("nextWaveButton");
         this.nextWaveButton.addEventListener("click", (event) => {
-            this.timeoutCount = 1;
+            this.timeoutCount = 3;
             this.setWaveFinishedPanelVisibility(false);
             this.startTimeout();
         })
@@ -71,8 +71,6 @@ class GameScene extends Scene {
         });
 
         this.setWaveFinishedPanelVisibility(false);
-
-        this.addToScene(new THREE.AmbientLight(0x404040, 0.2));// soft white light
 
         this.orbitControls = new OrbitControls(this.camera, document.getElementById('app'));
         this.orbitControls.mouseMovementPan({ clientX: -window.innerWidth / 8, clientY: -window.innerHeight / 4 });
@@ -173,8 +171,7 @@ class GameScene extends Scene {
         this.shopPanelVisibility = true;
 
         this.lives = 3;
-        this.money = 100;
-        this.moneyText.innerHTML = this.money;
+
         this.waveTotalEnemiesCount = 0;
         this.waveRemainingEnemiesCount = 0;
         this.allEnemies = [];
@@ -271,11 +268,16 @@ class GameScene extends Scene {
                 me.map = map.map;
                 me.waveManager = new WaveManager();
                 me.addToBeBeUpdated(me.waveManager);
-                me.waveManager.setData(me, waypoints, waveData);
-                me.waveCount = waveData.length;
+                me.waveManager.setData(me, waypoints, map.waveData);
+                me.waveCount = map.waveData.length;
 
-                const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-                dirLight.position.set(3, 10, 10);
+                me.money = map.money;
+                me.moneyText.innerHTML = map.money;
+
+                me.addToScene(new THREE.AmbientLight(0x404040, 0.5));// soft white light
+
+                const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
+                dirLight.position.set(3, 20, 10);
                 var d = map.map.length;
                 dirLight.castShadow = true;
                 dirLight.castShadow = true;
@@ -348,7 +350,6 @@ class GameScene extends Scene {
 
         } else {
             this.nextWaveButton.style.display = visible ? "flex" : "none";
-
         }
     }
 
@@ -384,7 +385,6 @@ class GameScene extends Scene {
     }
 
     updateMoney(amount) {
-
         this.addMoneyText.classList.remove("add-money-value-positive");
         this.addMoneyText.classList.remove("add-money-value-negative");
 
@@ -551,6 +551,9 @@ class GameScene extends Scene {
             contentItemButton.innerHTML = "BUY"
             contentItemButton.onclick = (event) => {
                 if (!this.selectedToBePlacedObject || this.selectedToBePlacedObject.data != data) {
+
+                    this.remove(this.selectedToBePlacedObject);
+
                     this.selectedToBePlacedObject = new Turret(allTurretData[i], this);
                     this.add(this.selectedToBePlacedObject);
                     this.selectedToBePlacedObject.setMaterialColorError(false);

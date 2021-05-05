@@ -59,7 +59,7 @@ class EndPointCube extends Entity {
                         float mask = fract((vUv.y - time ) * 4.0);
                         vec3 outColor = color * mask;
         
-                        gl_FragColor = vec4(outColor, opacity * mask);
+                        gl_FragColor = vec4(outColor, opacity * mask-0.1);
                     }
                 `;
         }

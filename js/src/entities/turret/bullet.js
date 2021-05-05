@@ -9,6 +9,9 @@ class Bullet {
         this.mesh.position.set(startPosition.x, startPosition.y, startPosition.z);
         this.scene.add(this)
 
+        this.mesh.castShadow = true;
+        this.mesh.receiveShadow = true;
+
         this.speed = bulletData.speed;
         this.damage = bulletData.damage;
         this.targetDirection = direction;

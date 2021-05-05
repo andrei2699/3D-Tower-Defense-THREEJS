@@ -67,7 +67,7 @@ class MainMenuScene extends Scene {
             turret.place();
         }
 
-        this.waveManager.setData(this, this.waypoints, waveData);
+        this.waveManager.setData(this, this.waypoints, this.map.waveData);
 
         const wave = this.waveManager.startNextWave();
         this.waveRemainingEnemiesCount = wave.enemyCount;

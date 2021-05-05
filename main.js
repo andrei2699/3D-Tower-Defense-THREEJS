@@ -39,10 +39,10 @@ var mainMenuScene = new MainMenuScene(createScene(), createCamera());
 mainMenuScene.addToScene(createLight());
 
 var currentScene;
-// changeScene(gameScene);
-// gameScene.setMap('assets/levels/level1.json')
+changeScene(gameScene);
+gameScene.setMap('assets/levels/level1.json')
 
-changeScene(mainMenuScene);
+// changeScene(mainMenuScene);
 
 // const interactionManager = new InteractionManager(
 //     renderer,

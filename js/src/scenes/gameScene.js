@@ -170,6 +170,7 @@ class GameScene extends Scene {
         this.gameIsOver = false;
         this.shopPanelVisibility = true;
 
+        this.currentWaveCount = 0;
         this.lives = 3;
 
         this.waveTotalEnemiesCount = 0;
@@ -184,7 +185,6 @@ class GameScene extends Scene {
         this.orbitControls.enabled = true;
         this.controlsFreezedText.style.display = !this.orbitControls.enabled ? "flex" : "none";
 
-        // this.updateMoney(151);
         this.updateWave(0);
     }
 
@@ -274,12 +274,11 @@ class GameScene extends Scene {
                 me.money = map.money;
                 me.moneyText.innerHTML = map.money;
 
-                me.addToScene(new THREE.AmbientLight(0x404040, 0.5));// soft white light
+                me.addToScene(new THREE.AmbientLight(0x404040, 0.5));
 
                 const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
                 dirLight.position.set(3, 20, 10);
                 var d = map.map.length;
-                dirLight.castShadow = true;
                 dirLight.castShadow = true;
                 dirLight.shadow.camera.left = - d;
                 dirLight.shadow.camera.right = d;
@@ -298,9 +297,6 @@ class GameScene extends Scene {
 
                 me.add(new EndPointCube(startPos, startPointColor, 1))
                 me.add(new EndPointCube(endPos, endPointColor, -1))
-
-                // const helper = new THREE.CameraHelper(dirLight.shadow.camera);
-                // this.addToScene(helper);
 
                 me.ResetGame();
 
@@ -456,7 +452,7 @@ class GameScene extends Scene {
         this.updateEnemiesLeft();
 
         if (this.waveRemainingEnemiesCount == 0) {
-            if (this.waveManager.isFinished()) {
+            if (this.waveManager.isFinished() || this.waveCount == this.currentWaveCount) {
                 this.gameover(true);
             }
             else {
@@ -483,6 +479,7 @@ class GameScene extends Scene {
             this.waveRemainingEnemiesCount = wave.enemyCount;
             this.updateEnemiesLeft()
             this.updateWave(wave.waveIndex)
+            this.currentWaveCount = wave.waveIndex + 1;
         }
     }
 

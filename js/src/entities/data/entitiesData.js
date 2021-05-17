@@ -28,7 +28,7 @@ const turretData = [
         imagePath: 'assets/images/turrets/BlackTurretPreview.png',
         reachDistance: 2,
         firingSpeed: 0.25,
-        price: 20,
+        price: 40,
         bulletData: {
             damage: 0.3,
             speed: 15,
@@ -76,9 +76,9 @@ const turretData = [
         imagePath: 'assets/images/turrets/BlueTurretPreview.png',
         reachDistance: 4,
         firingSpeed: 2,
-        price: 80,
+        price: 100,
         bulletData: {
-            damage: 8,
+            damage: 6,
             speed: 3,
             radius: 0.12,
             color: 0x000000

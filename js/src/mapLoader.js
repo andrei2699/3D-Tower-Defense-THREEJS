@@ -7,28 +7,27 @@ function loadMap(mapData, scene, gridSize) {
         gridSize = 1;
     }
 
-    var waypoints = [];
+    var startPos = { x: 0, y: 0 };
 
-    for (let x = 0; x < mapData.map.length; x++) {
+    for (let x = 0; x < mapData.mapsize; x++) {
         for (let y = 0; y < mapData.map[x].length; y++) {
             var color;
             var isPath;
 
-            if (mapData.map[x][y] == 0) {
+            if (mapData.map[x][y] == 0 || mapData.map[x][y] < 0) {
                 color = 0x1b630b;
                 isPath = false;
             }
             else if (mapData.map[x][y] > 0) {
-
                 if (mapData.map[x][y] == 2) {
                     color = startPointColor;
+                    startPos = { x: x, y: y };
                 }
                 else if (mapData.map[x][y] == 3) {
                     color = endPointColor;
                 } else {
                     color = 0x695b17;
                 }
-                waypoints.push({ x: x * gridSize, y: y * gridSize });
                 isPath = true;
             }
             const cell = createCell({ color: color, x: x * gridSize, y: y * gridSize })
@@ -36,25 +35,52 @@ function loadMap(mapData, scene, gridSize) {
             cell.isMapCell = true;
             cell.isPath = isPath;
 
-            // cell.addEventListener("click", (event) => {
-            //     console.log(event)
-            //     event.stopPropagation();
-            //     const clickedCell = event.target;
-            //     const coords = { x: camera.position.x, y: camera.position.z };
-            //     new TWEEN.Tween(coords)
-            //         .to({ x: clickedCell.position.x, y: clickedCell.position.z })
-            //         .easing(TWEEN.Easing.Quadratic.Out)
-            //         .onUpdate(() =>
-            //             camera.position.set(coords.x, camera.position.y, coords.y)
-            //         )
-            //         .start();
-            // });
-            // interactionManager.add(cell);
             scene.add(cell);
         }
     }
 
+    var waypoints = [];
+    var count = 0;
+
+    waypoints.push({ x: startPos.x * gridSize, y: startPos.y * gridSize });
+
+    while (mapData.map[startPos.x][startPos.y] != 3) {
+
+        if (!hasWaypoint(waypoints, startPos.x + 1, startPos.y) && inMap(startPos.x + 1, startPos.y, mapData.mapsize) && mapData.map[startPos.x + 1][startPos.y] > 0) {
+            startPos.x++;
+        }
+        else if (!hasWaypoint(waypoints, startPos.x - 1, startPos.y) && inMap(startPos.x - 1, startPos.y, mapData.mapsize) && mapData.map[startPos.x - 1][startPos.y] > 0) {
+            startPos.x--;
+        }
+        else if (!hasWaypoint(waypoints, startPos.x, startPos.y - 1) && inMap(startPos.x, startPos.y - 1, mapData.mapsize) && mapData.map[startPos.x][startPos.y - 1] > 0) {
+            startPos.y--;
+        }
+        else if (!hasWaypoint(waypoints, startPos.x, startPos.y + 1) && inMap(startPos.x, startPos.y + 1, mapData.mapsize) && mapData.map[startPos.x][startPos.y + 1] > 0) {
+            startPos.y++;
+        }
+        waypoints.push({ x: startPos.x * gridSize, y: startPos.y * gridSize });
+
+        count++;
+        if (count > mapData.mapsize * mapData.mapsize) {
+            break;
+        }
+    }
+
     return waypoints;
+}
+
+function hasWaypoint(waypoints, x, y) {
+    for (let i = 0; i < waypoints.length; i++) {
+        const element = waypoints[i];
+        if (element.x == x && element.y == y) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function inMap(x, y, size) {
+    return x >= 0 && y >= 0 && x < size && y < size;
 }
 
 function createCell({ color, x, y }) {

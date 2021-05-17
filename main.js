@@ -39,20 +39,10 @@ var mainMenuScene = new MainMenuScene(createScene(), createCamera());
 mainMenuScene.addToScene(createLight());
 
 var currentScene;
-changeScene(gameScene);
-gameScene.setMap('assets/levels/level1.json')
+// changeScene(gameScene);
+// gameScene.setMap('assets/levels/level1.json')
 
-// changeScene(mainMenuScene);
-
-// const interactionManager = new InteractionManager(
-//     renderer,
-//     camera,
-//     renderer.domElement
-// );
-
-// const gridHelper = new THREE.GridHelper(10, 10);
-// gridHelper.position.set(4.5, 0.51, 4.5)
-// scene.add(gridHelper);
+changeScene(mainMenuScene);
 
 loadModels(() => {
     console.log("objects loaded")
@@ -72,29 +62,8 @@ audioLoader.load('assets/sounds/music/Upbeat Forever.mp3', function (buffer) {
 });
 
 
-
-// for (const [name, object] of Object.entries(cubes)) {
-//     object.addEventListener("click", (event) => {
-//         event.stopPropagation();
-//         console.log(`${name} cube was clicked`);
-//         const cube = event.target;
-//         const coords = { x: camera.position.x, y: camera.position.y };
-//         new TWEEN.Tween(coords)
-//             .to({ x: cube.position.x, y: cube.position.y })
-//             .easing(TWEEN.Easing.Quadratic.Out)
-//             .onUpdate(() =>
-//                 camera.position.set(coords.x, coords.y, camera.position.z)
-//             )
-//             .start();
-//     });
-//     interactionManager.add(object);
-//     scene.add(object);
-// }
-
 animate((time) => {
     renderer.render(currentScene.scene, currentScene.camera);
-    // interactionManager.update();
-    TWEEN.update(time);
 });
 
 function onDocumentMouseMove(event) {
@@ -219,8 +188,7 @@ function createRenderer() {
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     app.appendChild(renderer.domElement);
-    // renderer.physicallyCorrectLights = true;
-    // renderer.outputEncoding = THREE.sRGBEncoding;
+
     renderer.gammaOutput = true
     renderer.shadowMap.enabled = true;
     return renderer;
@@ -249,8 +217,6 @@ function createLight() {
     const light = new THREE.PointLight(0xffffff, 1, 1000);
     light.position.set(0, 10, 10);
     return light;
-
-    // return new THREE.DirectionalLight(0xffffff, 0.5);
 }
 
 function animate(callback) {

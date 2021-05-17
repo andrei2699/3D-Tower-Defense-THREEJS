@@ -24,11 +24,19 @@ class MainMenuScene extends Scene {
         var me = this;
         var loader = new THREE.FileLoader();
         loader.load(
-            'assets/levels/level1.json',
+            'assets/levels/levelmenu.json',
             function (data) {
                 const map = JSON.parse(data);
                 me.waypoints = loadMap(map, me.scene, GridSize);
                 me.map = map;
+
+                var startPos = me.waypoints[0];
+                var endPos = me.waypoints[me.waypoints.length - 1];
+                startPos = { x: startPos.x, y: 0.75, z: startPos.y };
+                endPos = { x: endPos.x, y: 0.75, z: endPos.y };
+
+                me.add(new EndPointCube(startPos, startPointColor, 1))
+                me.add(new EndPointCube(endPos, endPointColor, -1))
             },
             undefined,
             function (err) {

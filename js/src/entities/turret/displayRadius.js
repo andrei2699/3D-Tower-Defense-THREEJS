@@ -1,11 +1,11 @@
 class DisplayRadius {
     constructor(reachDistance, startAngle, endAngle) {
         const curve = new THREE.EllipseCurve(
-            0, 0,            // ax, aY
-            reachDistance, reachDistance,           // xRadius, yRadius
-            startAngle, endAngle,  // aStartAngle, aEndAngle
-            false,            // aClockwise
-            0                 // aRotation
+            0, 0,
+            reachDistance, reachDistance,
+            startAngle, endAngle,
+            false,
+            0
         );
 
 

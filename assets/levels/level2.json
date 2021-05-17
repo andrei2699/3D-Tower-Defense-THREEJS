@@ -1,34 +1,44 @@
 {
-    "name": "Level 1",
-    "type": "mountain",
-    "money": 100,
+    "name": "Level 2",
+    "type": "plains",
+    "money": 80,
     "waveData": [
-        {
-            "enemyCount": 2,
-            "enemyTypes": [
-                "basic"
-            ],
-            "spawnTime": 5,
-            "money": 60
-        },
         {
             "enemyCount": 5,
             "enemyTypes": [
                 "basic"
             ],
             "spawnTime": 4,
+            "money": 60
+        },
+        {
+            "enemyCount": 10,
+            "enemyTypes": [
+                "small"
+            ],
+            "spawnTime": 0.4,
             "money": 20
         },
         {
-            "enemyCount": 6,
+            "enemyCount": 16,
             "enemyTypes": [
                 "basic",
-                "basic",
-                "medium",
-                "basic"
+                "small",
+                "small"
             ],
-            "spawnTime": 3,
-            "money": 30
+            "spawnTime": 1.2,
+            "money": 10
+        },
+        {
+            "enemyCount": 28,
+            "enemyTypes": [
+                "basic",
+                "small",
+                "basic",
+                "medium"
+            ],
+            "spawnTime": 2,
+            "money": 20
         }
     ],
     "mapsize": 8,
@@ -38,15 +48,65 @@
             0,
             0,
             0,
-            -1,
+            0,
             -1,
             -1,
             0
         ],
         [
+            -1,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            3
+        ],
+        [
             2,
             1,
+            1,
+            1,
             0,
+            0,
+            1,
+            0
+        ],
+        [
+            0,
+            -1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+        ],
+        [
+            -1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0
+        ],
+        [
+            -1,
+            -1,
+            -1,
+            0,
+            1,
+            1,
+            1,
+            0
+        ],
+        [
+            -1,
+            -1,
+            -1,
             0,
             0,
             0,
@@ -54,64 +114,14 @@
             -1
         ],
         [
-            0,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-        ],
-        [
-            0,
-            1,
-            0,
-            0,
-            0,
             -1,
             0,
-            0
-        ],
-        [
-            0,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            0
-        ],
-        [
-            0,
-            -1,
-            0,
-            0,
-            0,
-            0,
-            1,
-            0
-        ],
-        [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            0
-        ],
-        [
             -1,
             -1,
             0,
             0,
             0,
-            0,
-            1,
-            3
+            0
         ]
     ]
 }

@@ -57,9 +57,6 @@ class InfiniteWaveManager {
                 this.isWavePlaying = false;
                 this.cooldown = 0.0;
             } else {
-                // spawn new enemy
-                // use round robin
-
                 this.currentEnemyCount--;
 
                 var currentEnemyType = currentWave.enemyTypes[this.currentEnemyIndex];

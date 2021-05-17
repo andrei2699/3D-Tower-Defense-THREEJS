@@ -166,11 +166,6 @@ class Turret extends Entity {
             if (this.turretWorldPosition.distanceToSquared(this.targetEnemyWorldPosition) <= this.reachDistance * this.reachDistance) {
 
                 return this.scene.allEnemies[i].mesh;
-
-                // this.targetEnemyWorldPosition.sub(this.turretWorldPosition);
-
-                // if (this._isPositionInViewRange(this.targetEnemyWorldPosition)) {
-                // }
             }
         }
 

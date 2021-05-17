@@ -47,9 +47,6 @@ class WaveManager {
                 this.currentWaveIndex++;
                 this.isWavePlaying = false;
             } else {
-                // spawn new enemy
-                // use round robin
-
                 currentWave.enemyCount--;
 
                 var currentEnemyType = currentWave.enemyTypes[this.currentEnemyIndex];

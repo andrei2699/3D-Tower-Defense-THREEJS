@@ -216,13 +216,4 @@ class Enemy extends AnimatedEntity {
                 `;
         }
     }
-    // startMovementTo(targetCoords) {
-    //     const coords = { x: this.mesh.position.x, y: this.mesh.position.y };
-    //     new TWEEN.Tween(coords)
-    //         .to({ x: targetCoords.x, y: targetCoords.y })
-    //         .onUpdate(() =>
-    //             this.mesh.position.set(coords.x, this.mesh.position.y, coords.y)
-    //         )
-    //         .start();
-    // }
 }

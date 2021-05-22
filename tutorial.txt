@@ -14,3 +14,6 @@ Toggle Game Menu
 Key: Escape
 
 
+After placing a turret, Click on it for more info</span>
+
+Money can be obtained by killing the enemies

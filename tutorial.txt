@@ -2,10 +2,16 @@ Tutorial
 
 Rotate Around: Right Mouse Button
 Move Around: Left Mouse Button
-Zoom Around: Middle Mouse Button
+Zoom: Middle Mouse Button
 
 Open Shop 
 Key: S
+
+Place turret
+Left Mouse Button
+
+Cancel Turret placing
+Right Mouse Button
 
 Lock Controls
 Key: F
@@ -14,6 +20,6 @@ Toggle Game Menu
 Key: Escape
 
 
-After placing a turret, Click on it for more info</span>
+After placing a turret, Click on it for more info
 
 Money can be obtained by killing the enemies

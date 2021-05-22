@@ -61,7 +61,7 @@ body {
 .shop-content-item {
     display: flex;
     flex-direction: column;
-    margin-top: 8px;
+    margin-top: 18px;
     margin-bottom: 8px;
     margin-right: 8px;
     padding: 24px;
@@ -381,12 +381,18 @@ body {
 }
 
 .tutorial-div>* {
-    padding: 8px;
+    padding: 12px;
 }
 
 .tutorial-title {
     font-size: 1.4em;
     color: white;
+}
+
+#tutorialButton {
+    width: 310px !important;
+    background-size: 100% 100%;
+    color: green;
 }
 
 #levels-panel {
@@ -404,6 +410,7 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    font-size: 1.2em;
 }
 
 .level-panel-item:hover {

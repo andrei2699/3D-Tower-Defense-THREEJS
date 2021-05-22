@@ -1,0 +1,16 @@
+Tutorial
+
+Rotate Around: Right Mouse Button
+Move Around: Left Mouse Button
+Zoom Around: Middle Mouse Button
+
+Open Shop 
+Key: S
+
+Lock Controls
+Key: F
+
+Toggle Game Menu
+Key: Escape
+
+

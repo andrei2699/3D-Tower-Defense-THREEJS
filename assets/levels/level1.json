@@ -8,7 +8,7 @@
             "enemyTypes": [
                 "basic"
             ],
-            "spawnTime": 5,
+            "spawnTime": 2.5,
             "money": 60
         },
         {
